@@ -3,17 +3,19 @@ import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../Redux/store';
 import { login } from '../../Redux/reducers/auth.reducer';
+import { USER_TOKEN_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
 
 const AuthWrapper :FC = ({ children }) => {
   const userData = useSelector((state: RootState) => state.userData);
-  const [cookies] = useCookies([]);
+  const userCookie = useCookies([USER_TOKEN_COOKIE_NAME])[0];
   const dispatch = useDispatch();
+
   useEffect(() => {
-    // @ts-ignore
-    if (cookies.token) dispatch(login(cookies.token));
+    // eslint-disable-next-line max-len
+    if (Object.keys(userCookie[USER_TOKEN_COOKIE_NAME]).length !== 0) dispatch(login(userCookie[USER_TOKEN_COOKIE_NAME]));
   }, []);
-  // @ts-ignore
-  if (!userData.isAuthenticated && !cookies.token) {
+
+  if (!userData.isAuthenticated && Object.keys(userCookie).length === 0) {
     window.location.href = '/login';
   }
 

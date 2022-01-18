@@ -8,6 +8,7 @@ import {
   ModalOverlay, useDisclosure,
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
+import { ErrorResponse } from '../../Types/Errors';
 
 type props = {
   title: string;
@@ -18,11 +19,12 @@ type props = {
   };
   isCancelable?: boolean;
   onAction: () => void;
-    acceptButtonText: string
+  acceptButtonText: string;
+  rest:Object;
 };
 
 const ModalDialog :FC<props> = ({
-  title, children, shouldOpen, isCancelable = true, onAction, acceptButtonText,
+  title, children, shouldOpen, isCancelable = true, onAction, acceptButtonText, rest,
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: shouldOpen.isOpen });
 
@@ -32,16 +34,24 @@ const ModalDialog :FC<props> = ({
 
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent {...rest}>
           <ModalHeader>{title}</ModalHeader>
           <ModalBody pb={6}>
             {children}
           </ModalBody>
           <ModalFooter>
             <Button
-              onClick={() => {
-                onAction();
-                onClose();
+              onClick={async () => {
+                try {
+                  await onAction();
+                  onClose();
+                } catch (e) {
+                  if (e instanceof ErrorResponse) {
+                    console.log(e.message);
+                  } else {
+                    console.log(e);
+                  }
+                }
               }}
               colorScheme="blue"
               mr={3}

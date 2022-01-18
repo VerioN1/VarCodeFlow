@@ -36,5 +36,6 @@ module.exports = {
     'max-lines': ['error', 115],
     'import/no-extraneous-dependencies': 'off',
     'react/require-default-props': 'off',
+    'react/prop-types': 'off',
   },
 };
