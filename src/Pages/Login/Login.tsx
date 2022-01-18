@@ -11,14 +11,17 @@ import { useEffect } from 'react';
 import { Dict } from '../../Types/Utils';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from './Login.Logic';
+import { USER_TOKEN_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cookie, setCookie] = useCookies();
+  const [userCookie, setUserCookie] = useCookies([USER_TOKEN_COOKIE_NAME]);
+
   useEffect(() => {
-    if (cookie.token) navigate('/');
-  }, [cookie]);
+    if (Object.keys(userCookie).length !== 0) if (userCookie[USER_TOKEN_COOKIE_NAME]) navigate('/');
+  }, [userCookie]);
+
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
       <Flex
@@ -40,7 +43,7 @@ const Login = () => {
           <Heading m="5" mb="0" as="h4" size="md">VarCode Flow</Heading>
           <Formik
             initialValues={initialValues}
-            onSubmit={(values) => onSubmit(values, dispatch, navigate, setCookie)}
+            onSubmit={(values) => onSubmit(values, dispatch, navigate, setUserCookie)}
             validationSchema={validationSchema}
           >
             {({ handleSubmit }) => (

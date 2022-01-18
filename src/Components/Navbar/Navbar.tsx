@@ -27,7 +27,7 @@ const Navbar = () => {
             <Link mr="1rem" variant="ghost" href="/Register">Register</Link>
           </Stack>
           <Link mr="1rem" variant="ghost" href="/TestsHistory">Tests history</Link>
-          <Link mr="1rem" variant="ghost" href="/NewTest">New Tests</Link>
+          <Link mr="1rem" variant="ghost" href="/NewTest">New Test</Link>
           <Button variant="ghost" onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
