@@ -20,11 +20,11 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
-    'sort-imports': 0,
-    'import/no-unresolved': 0,
-    'import/extensions': 0,
-    'react/react-in-jsx-scope': 0,
-    'react/jsx-filename-extension': 0,
+    'sort-imports': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': 'off',
     'react/function-component-definition': [
       2,
       {
@@ -32,8 +32,9 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
-    'react/jsx-props-no-spreading': 0,
+    'react/jsx-props-no-spreading': 'off',
     'max-lines': ['error', 115],
-    'import/no-extraneous-dependencies': 0,
+    'import/no-extraneous-dependencies': 'off',
+    'react/require-default-props': 'off',
   },
 };
