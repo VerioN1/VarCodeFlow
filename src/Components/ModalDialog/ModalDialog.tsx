@@ -8,7 +8,7 @@ import {
   ModalOverlay, useDisclosure,
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
-import { ErrorResponse } from '../../Types/Errors';
+import { ErrorResponse } from '../../Types/Errors.Types';
 
 type props = {
   title: string;

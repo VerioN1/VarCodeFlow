@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
 import { useCookies } from 'react-cookie';
@@ -11,15 +12,16 @@ const NewTest = () => {
 
   useEffect(() => {
     if (Object.keys(InProgressTestCookie).length !== 0) {
-      // eslint-disable-next-line max-len
+      // make axios request to get test Data is status is in progress //
       if (InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]?.isTestInProgress) setIsTestInProgress(true);
       else setIsTestInProgress(false);
+      console.log(InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]);
     }
   }, [InProgressTestCookie]);
 
   return (
     <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">
-      {isTestInProgress ? <TestRunTime /> : <NewTestForm />}
+      {isTestInProgress ? <TestRunTime {...InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]} /> : <NewTestForm />}
     </Flex>
   );
 };

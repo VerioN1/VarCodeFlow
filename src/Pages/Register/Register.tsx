@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../Redux/store';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from '../Register/Register.Logic';
+import Card from '../../Components/Card/Card';
 
 const Register = () => {
   const userData = useSelector((state:RootState) => state.userData);
@@ -21,16 +22,7 @@ const Register = () => {
 
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
-      <Flex
-        borderWidth="1px"
-        p="16px"
-        w="90%"
-        boxShadow="lg"
-        h="fit-content"
-        borderRadius="lg"
-        flexDir="column"
-        overflow="hidden"
-      >
+      <Card w="70vw">
         <Image
           src={varcodeLogo}
           alt="Barcode"
@@ -70,7 +62,7 @@ const Register = () => {
             )}
           </Formik>
         </Flex>
-      </Flex>
+      </Card>
     </Flex>
   );
 };
