@@ -10,9 +10,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { Flex } from '@chakra-ui/react';
 import chartLogic from './Chart.logic';
 import { IScan } from '../../../Types/Tests.Types';
+import Card from '../../Card/Card';
 
 ChartJS.register(
   CategoryScale,
@@ -25,6 +25,7 @@ ChartJS.register(
 );
 
 export const options = {
+  aspectRatio: 1,
   responsive: true,
   plugins: {
     legend: {
@@ -38,11 +39,10 @@ export const options = {
 };
 const TestChart : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
   const [chartData] = useState(chartLogic.prepareData(scans));
-  console.log(chartData);
   return (
-    <Flex w="100%">
+    <Card w="100%">
       <Line data={chartData} options={options} />
-    </Flex>
+    </Card>
   );
 };
 

@@ -11,7 +11,7 @@ interface PreviewTestProps {
 }
 
 const PreviewTest : FC<PreviewTestProps> = (props) => (
-  <Flex w="100%" justify="center" flexDir="column">
+  <Flex w="100%" flexDir="column" h="100%">
     <TestMetaData {...props.testMetaData} children={props.metaDataChildren} />
     <TestDataPlots testData={props.testData} />
   </Flex>

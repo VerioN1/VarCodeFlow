@@ -1,5 +1,5 @@
 export interface ITest {
-    testID: number;
+    testId: number;
     testName: string;
     labelType: string;
     manufacturingDate: Date;

@@ -21,7 +21,6 @@ const prepareData = (data : IScan[]) => {
       memo[lastDate] = [];
       return memo;
     }
-    // console.log();
     if (differenceInMinutes(parse(lastDate, 'MM/dd/yyyy-HH:mm:ss', new Date()), parse(x.date, 'MM/dd/yyyy HH:mm:ss', new Date())) > 1) {
       lastDate = format(parse(x.date, 'MM/dd/yyyy HH:mm:ss', new Date()), 'MM/dd/yyyy-HH:mm:ss').toString();
       memo[lastDate] = [];
@@ -32,7 +31,6 @@ const prepareData = (data : IScan[]) => {
   }, {});
   // const labels = Object.values(data.reduce((acc, cur) => Object.assign(acc, { [barCodeSubstring(cur.barCode)]: cur }), {}));
   const dataSet = groupBy(data);
-  console.log(dataSet);
   return {
     labels: Object.keys(dataSet),
     datasets: [
@@ -47,6 +45,12 @@ const prepareData = (data : IScan[]) => {
         data: Object.values(dataSet).map((QCs) => QCs.filter((QC) => QC === '3').length),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+      {
+        label: 'QC 4',
+        data: Object.values(dataSet).map((QCs) => QCs.filter((QC) => QC === '4').length),
+        borderColor: 'rgb(62,235,102)',
+        backgroundColor: 'rgba(105,235,53,0.5)',
       },
     ],
   };

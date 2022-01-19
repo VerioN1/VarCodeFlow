@@ -1,17 +1,39 @@
-import React, { FC } from 'react';
-import { Flex } from '@chakra-ui/react';
+import React, {
+  FC, useEffect, useRef, useState,
+} from 'react';
+import { Button, Flex, Input } from '@chakra-ui/react';
 import { IScan, ITest } from '../../../../Types/Tests.Types';
 import PreviewTest from '../../../../Components/PreviewTest/PreviewTest';
 import { scansData } from '../../../../Utils/FakeData/scansData';
 
 const TestRunTime: FC<ITest & React.ReactNode> = (props) => {
-  const test = 'test';
+  const [isPaused, setIsPaused] = useState(false);
+  const refInput = useRef<HTMLInputElement>();
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isPaused) {
+        return;
+      }
+      if (refInput.current && !isPaused) {
+        refInput.current.focus();
+      }
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isPaused]);
+
   return (
     <PreviewTest
       testMetaData={props}
-      metaDataChildren={
-        <Flex><h1>{test}</h1></Flex>
-    }
+      metaDataChildren={(
+        <Flex justify="space-around" mt="1rem">
+          {/* @ts-ignore */}
+          <Input ref={refInput} type="text" placeholder="Barcode scanner typer" w="50%" />
+          {isPaused ? <Button w="15%" colorScheme="green" onClick={() => setIsPaused((prev) => !prev)}>Resume</Button> : <Button onClick={() => setIsPaused((prev) => !prev)} w="15%" colorScheme="yellow">Pause</Button>}
+          <Button colorScheme="red" w="15%">Stop</Button>
+        </Flex>
+      )}
       testData={scansData as IScan[]}
     />
   );
