@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { FC } from 'react';
 import {
   Table, Thead, Tbody, Tr, Th, Td, chakra,
@@ -17,15 +18,15 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
   const columns = React.useMemo(
     () => [
       {
-        Header: 'To convert',
+        Header: 'Test ID',
         accessor: 'testID',
       },
       {
-        Header: 'Into',
+        Header: 'Scan Time',
         accessor: 'date',
       },
       {
-        Header: 'Multiply by',
+        Header: 'Bar Code',
         accessor: 'barCode',
         isNumeric: true,
       },
@@ -35,7 +36,6 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
 
   const {
     getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
-  // @ts-ignore
   } = useTable({ columns, data }, useSortBy);
 
   return (
@@ -47,7 +47,6 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
               {headerGroup.headers.map((column) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  isNumeric={column.isNumeric}
                 >
                   {column.render('Header')}
                   <chakra.span pl="4">

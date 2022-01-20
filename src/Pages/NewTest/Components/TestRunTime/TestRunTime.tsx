@@ -1,10 +1,13 @@
 import React, {
   FC, useEffect, useRef, useState,
 } from 'react';
-import { Button, Flex, Input } from '@chakra-ui/react';
+import {
+  Button, Flex, Input,
+} from '@chakra-ui/react';
 import { IScan, ITest } from '../../../../Types/Tests.Types';
 import PreviewTest from '../../../../Components/PreviewTest/PreviewTest';
 import { scansData } from '../../../../Utils/FakeData/scansData';
+import FinishTestDialog from '../FinishTestDialog/FinishTestDialog';
 
 const TestRunTime: FC<ITest & React.ReactNode> = (props) => {
   const [isPaused, setIsPaused] = useState(false);
@@ -30,8 +33,10 @@ const TestRunTime: FC<ITest & React.ReactNode> = (props) => {
         <Flex justify="space-around" mt="1rem">
           {/* @ts-ignore */}
           <Input ref={refInput} type="text" placeholder="Barcode scanner typer" w="50%" />
-          {isPaused ? <Button w="15%" colorScheme="green" onClick={() => setIsPaused((prev) => !prev)}>Resume</Button> : <Button onClick={() => setIsPaused((prev) => !prev)} w="15%" colorScheme="yellow">Pause</Button>}
-          <Button colorScheme="red" w="15%">Stop</Button>
+          {isPaused
+            ? <Button w="15%" colorScheme="green" onClick={() => setIsPaused((prev) => !prev)}>Resume</Button>
+            : <Button onClick={() => setIsPaused((prev) => !prev)} w="15%" colorScheme="yellow">Pause</Button>}
+          <FinishTestDialog />
         </Flex>
       )}
       testData={scansData as IScan[]}

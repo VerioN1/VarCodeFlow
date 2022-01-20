@@ -10,11 +10,14 @@ body {
 #root{
   width: 100vw;
   min-height: 100vh;
+  overflow: hidden;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
 .date-picker{
   width: 100%;
   border-radius: 20px;
@@ -46,8 +49,5 @@ code {
     -webkit-transform: rotate(359deg);
     transform: rotate(359deg);
   }
-}
-.div-resize{
-  resize: both;
 }
 

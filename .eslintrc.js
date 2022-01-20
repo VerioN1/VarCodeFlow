@@ -39,5 +39,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/no-children-prop': 'off',
     'react/no-unused-prop-types': 'off',
+    'nonblock-statement-body-position': 'off',
+    curly: 'off',
   },
 };

@@ -5,7 +5,7 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay, useDisclosure,
+  ModalOverlay, Tooltip, useDisclosure,
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import { ErrorResponse } from '../../Types/Errors.Types';
@@ -16,11 +16,13 @@ type props = {
   shouldOpen: {
       isOpen: boolean;
       buttonText?: string;
+      toolTipText?: string;
+      buttonProps?: Object;
   };
   isCancelable?: boolean;
   onAction: () => void;
   acceptButtonText: string;
-  rest:Object;
+  rest?:Object;
 };
 
 const ModalDialog :FC<props> = ({
@@ -30,8 +32,13 @@ const ModalDialog :FC<props> = ({
 
   return (
     <>
-      {shouldOpen.isOpen ? null : <Button onClick={onOpen}>{shouldOpen.buttonText}</Button>}
-
+      {shouldOpen.isOpen
+        ? null
+        : (
+          <Tooltip hasArrow label={shouldOpen.toolTipText}>
+            <Button {...shouldOpen.buttonProps} onClick={onOpen}>{shouldOpen.buttonText}</Button>
+          </Tooltip>
+        )}
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent {...rest}>

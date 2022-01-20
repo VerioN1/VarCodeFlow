@@ -5,7 +5,7 @@ import { FiType } from 'react-icons/fi';
 import { BsCalendarDate } from 'react-icons/bs';
 import { RiTempHotLine } from 'react-icons/ri';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
-import { AiOutlineStop } from 'react-icons/ai';
+import { MdDone } from 'react-icons/md';
 import StatsCard from '../StatsCard/StatsCard';
 import Card from '../Card/Card';
 import { ITest } from '../../Types/Tests.Types';
@@ -31,8 +31,8 @@ const TestMetaData: FC<ITest & React.ReactNode> = ({
       <StatsCard title="Test Name" stat={testName} icon={<BiTestTube size="3em" />} />
       <StatsCard title="Test Label" stat={labelType} icon={<FiType size="3em" />} />
       <StatsCard title="Test Start Date" stat={activationDate ?? 'No Date'} icon={<BsCalendarDate size="3em" />} />
-      <StatsCard title="Incubator Temp" stat={incubatorTemp.toString()} icon={<RiTempHotLine size="3em" />} />
-      <StatsCard title="Test In Progress" stat={isTestInProgress ? 'Yes' : 'No'} icon={isTestInProgress ? <CgSpinnerTwoAlt className="icon-spin" size="3em" /> : <AiOutlineStop size="3em" />} />
+      <StatsCard title="Incubator Temp" stat={`${incubatorTemp.toString()} °C`} icon={<RiTempHotLine size="3em" />} />
+      <StatsCard title="Test Status" stat={isTestInProgress ? 'In Progress' : 'Finished'} icon={isTestInProgress ? <CgSpinnerTwoAlt className="icon-spin" size="3em" /> : <MdDone size="3em" />} />
     </SimpleGrid>
     {children}
   </Card>

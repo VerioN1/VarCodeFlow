@@ -28,7 +28,7 @@ const NewTestForm = () => {
         } else throw new ErrorResponse('formRef Error', 500);
       }}
       acceptButtonText="Create New Test"
-      isCancelable={false}
+      isCancelable
     >
       <Flex w="100%" justifyContent="center" align="center" flexDir="column">
         <Heading size="lg">Create Test Form</Heading>
@@ -53,7 +53,7 @@ const NewTestForm = () => {
               <Flex padding="2%" flex="1" flexDir="column">
                 <InputControl name="testName" label="Test Name" />
                 <DatePickerField name="manufacturingDate" />
-                <NumberInputControl name="incubatorTemp" label="Incubator Temperature" />
+                <NumberInputControl name="incubatorTemp" label="Incubator Temperature In Celsius " />
               </Flex>
             </Box>
           )}

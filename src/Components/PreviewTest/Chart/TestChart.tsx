@@ -25,7 +25,7 @@ ChartJS.register(
 );
 
 export const options = {
-  aspectRatio: 1,
+  // aspectRatio: 1,
   responsive: true,
   plugins: {
     legend: {
@@ -33,7 +33,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Line Chart',
+      text: "Qc's scan results",
     },
   },
 };
