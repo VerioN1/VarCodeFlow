@@ -7,8 +7,9 @@ import { Formik } from 'formik';
 import { InputControl, NumberInputControl } from 'formik-chakra-ui';
 import { CreateNewTest, initialTestValues, validationTestSchema } from './NewTestForm.Logic';
 import ModalDialog from '../../../../Components/ModalDialog/ModalDialog';
-import { ErrorResponse } from '../../../../Types/Errors';
+import { ErrorResponse } from '../../../../Types/Errors.Types';
 import { TEST_IN_PROGRESS_COOKIE_NAME } from '../../../../Utils/Cookies/Cookies.constants';
+import DatePickerField from './DatePickerField';
 
 const NewTestForm = () => {
   const formRef = useRef<any>(null);
@@ -27,7 +28,7 @@ const NewTestForm = () => {
         } else throw new ErrorResponse('formRef Error', 500);
       }}
       acceptButtonText="Create New Test"
-      isCancelable={false}
+      isCancelable
     >
       <Flex w="100%" justifyContent="center" align="center" flexDir="column">
         <Heading size="lg">Create Test Form</Heading>
@@ -50,8 +51,9 @@ const NewTestForm = () => {
                 <InputControl name="boxNum" label="Box Number" />
               </Flex>
               <Flex padding="2%" flex="1" flexDir="column">
-                <InputControl name="testDate" label="Test Date" />
-                <NumberInputControl name="IncubatorTemp" label="Incubator Temperature" />
+                <InputControl name="testName" label="Test Name" />
+                <DatePickerField name="manufacturingDate" />
+                <NumberInputControl name="incubatorTemp" label="Incubator Temperature In Celsius " />
               </Flex>
             </Box>
           )}

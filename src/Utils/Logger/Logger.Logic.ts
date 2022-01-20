@@ -1,4 +1,4 @@
-import { Dict } from '../../Types/Utils';
+import { Dict } from '../../Types/Utils.Types';
 
 export default class Logger {
   public static Log(message: string, optionalParams: Dict<string>): void {

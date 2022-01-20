@@ -8,10 +8,11 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { useEffect } from 'react';
-import { Dict } from '../../Types/Utils';
+import { Dict } from '../../Types/Utils.Types';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from './Login.Logic';
 import { USER_TOKEN_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
+import Card from '../../Components/Card/Card';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -24,15 +25,7 @@ const Login = () => {
 
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
-      <Flex
-        borderWidth="1px"
-        p="16px"
-        boxShadow="lg"
-        h="fit-content"
-        borderRadius="lg"
-        flexDir="column"
-        overflow="hidden"
-      >
+      <Card>
         <Image
           src={varcodeLogo}
           alt="Barcode"
@@ -72,7 +65,7 @@ const Login = () => {
                         />
                       </InputGroup>
                       {meta.touched && meta.error && (
-                        <Text color="red">{meta.error}</Text>
+                        <Text fontSize="xl" color="red">{meta.error}</Text>
                       )}
                     </>
                   )}
@@ -101,7 +94,7 @@ const Login = () => {
                         />
                       </InputGroup>
                       {meta.touched && meta.error && (
-                        <Text color="red">{meta.error}</Text>
+                        <Text fontSize="xl" color="red">{meta.error}</Text>
                       )}
                     </>
                   )}
@@ -113,7 +106,7 @@ const Login = () => {
             )}
           </Formik>
         </Flex>
-      </Flex>
+      </Card>
     </Flex>
   );
 };

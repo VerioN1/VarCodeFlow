@@ -10,16 +10,20 @@ const NewTest = () => {
   const [isTestInProgress, setIsTestInProgress] = useState(false);
 
   useEffect(() => {
+    // TODO: check if test is in progress and request it
     if (Object.keys(InProgressTestCookie).length !== 0) {
-      // eslint-disable-next-line max-len
-      if (InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]?.isTestInProgress) setIsTestInProgress(true);
+      if (InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]?.isTestInProgress)
+        setIsTestInProgress(true);
       else setIsTestInProgress(false);
+      console.log(InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]);
     }
   }, [InProgressTestCookie]);
 
   return (
     <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">
-      {isTestInProgress ? <TestRunTime /> : <NewTestForm />}
+      {isTestInProgress
+        ? <TestRunTime {...InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]} />
+        : <NewTestForm />}
     </Flex>
   );
 };

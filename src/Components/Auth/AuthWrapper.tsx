@@ -10,7 +10,7 @@ const AuthWrapper :FC = ({ children }) => {
   const userCookie = useCookies([USER_TOKEN_COOKIE_NAME])[0];
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => { // TODO: fetch user data from server and store it in redux store
     // eslint-disable-next-line max-len
     if (Object.keys(userCookie[USER_TOKEN_COOKIE_NAME]).length !== 0) dispatch(login(userCookie[USER_TOKEN_COOKIE_NAME]));
   }, []);
