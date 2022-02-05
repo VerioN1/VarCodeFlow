@@ -12,12 +12,9 @@ body {
   min-height: 100vh;
   overflow: hidden;
 }
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html{
+  overflow-x: hidden;
 }
-
-
 .date-picker{
   width: 100%;
   border-radius: 20px;

@@ -1,12 +1,18 @@
 import { Textarea } from '@chakra-ui/react';
 import React, { useRef } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom';
 import ModalDialog from '../../../../Components/ModalDialog/ModalDialog';
+import submitTest from './FinishTest.logic';
+import fd from '../../../../Utils/Time/Date.Format';
 
-const FinishTestDialog = () => {
+const FinishTestDialog = ({ testId }: {testId: string}) => {
+  const cookieDeleter = useCookies([])[2];
   const inputRef = useRef<HTMLInputElement>();
+  const navigate = useNavigate();
   const handleSubmit = () => {
     if (inputRef.current) {
-      console.log(inputRef.current.value);
+      submitTest(testId, { comments: inputRef.current.value ?? 'no comments', deactivationDate: fd.formatDateAndTime(new Date()) }, cookieDeleter, navigate);
     }
   };
 

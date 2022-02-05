@@ -1,22 +1,35 @@
 import React, { FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../Redux/store';
+import { Heading } from '@chakra-ui/react';
+import { isTokenValid } from '../../services/User.services';
 import { login } from '../../Redux/reducers/auth.reducer';
-import { USER_TOKEN_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
+import useFetch from '../../hooks/useFetch/useFetch.hook';
+import { USER_TOKEN_FIELD } from '../../Utils/Cookies/Cookies.constants';
+import { IUser } from '../../Types/User.Types';
 
 const AuthWrapper :FC = ({ children }) => {
-  const userData = useSelector((state: RootState) => state.userData);
-  const userCookie = useCookies([USER_TOKEN_COOKIE_NAME])[0];
+  const [getCookie] = useCookies([]);
+  // @ts-ignore
+  const userToken = getCookie[USER_TOKEN_FIELD] ?? 'error';
+  localStorage.setItem(USER_TOKEN_FIELD, userToken);
+  const state = useFetch<IUser>('TokenValidation', isTokenValid);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  useEffect(() => { // TODO: fetch user data from server and store it in redux store
-    // eslint-disable-next-line max-len
-    if (Object.keys(userCookie[USER_TOKEN_COOKIE_NAME]).length !== 0) dispatch(login(userCookie[USER_TOKEN_COOKIE_NAME]));
-  }, []);
+  useEffect(() => {
+    if (state.status === 'succeeded') {
+      dispatch(login(state.data));
+      // @ts-ignore
+      localStorage.setItem('email', state.data.email);
+    }
+  }, [state.status]);
 
-  if (!userData.isAuthenticated && Object.keys(userCookie).length === 0) {
-    window.location.href = '/login';
+  if (state.status === 'loading') return <Heading>Loading...</Heading>;
+  if (state.status === 'failed') {
+    navigate('/Logout');
+    return <Heading>Error</Heading>;
   }
 
   return (

@@ -9,18 +9,13 @@ import Card from '../../Card/Card';
 import { IScan } from '../../../Types/Tests.Types';
 
 const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
-  console.log(scans);
   const data = React.useMemo(
     () => scans,
-    [],
+    [scans],
   );
 
   const columns = React.useMemo(
     () => [
-      {
-        Header: 'Test ID',
-        accessor: 'testID',
-      },
       {
         Header: 'Scan Time',
         accessor: 'date',
@@ -29,6 +24,10 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
         Header: 'Bar Code',
         accessor: 'barCode',
         isNumeric: true,
+      },
+      {
+        Header: 'Drum Round #',
+        accessor: 'round',
       },
     ],
     [],

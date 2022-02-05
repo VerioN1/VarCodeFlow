@@ -5,6 +5,7 @@ import React, { ReactNode } from 'react';
 
 interface StatsCardProps {
     title: string;
+    textSize?: string | object;
     stat: string;
     icon: ReactNode;
 }
@@ -24,7 +25,7 @@ const StatsCard = (props: StatsCardProps) => {
           <StatLabel fontWeight="medium" isTruncated>
             {title}
           </StatLabel>
-          <StatNumber fontSize="2xl" fontWeight="medium">
+          <StatNumber fontSize={props?.textSize ?? '2xl'} fontWeight="medium">
             {stat}
           </StatNumber>
         </Box>

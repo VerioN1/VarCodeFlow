@@ -11,17 +11,18 @@ import { useEffect } from 'react';
 import { Dict } from '../../Types/Utils.Types';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from './Login.Logic';
-import { USER_TOKEN_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
+import { USER_TOKEN_FIELD } from '../../Utils/Cookies/Cookies.constants';
 import Card from '../../Components/Card/Card';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userCookie, setUserCookie] = useCookies([USER_TOKEN_COOKIE_NAME]);
-
+  const [userCookie, setUserCookie] = useCookies([USER_TOKEN_FIELD]);
   useEffect(() => {
-    if (Object.keys(userCookie).length !== 0) if (userCookie[USER_TOKEN_COOKIE_NAME]) navigate('/');
-  }, [userCookie]);
+    if (userCookie[USER_TOKEN_FIELD]) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
@@ -39,20 +40,18 @@ const Login = () => {
             onSubmit={(values) => onSubmit(values, dispatch, navigate, setUserCookie)}
             validationSchema={validationSchema}
           >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, isSubmitting }) => (
               <Box
                 as="form"
                 onSubmit={handleSubmit as any}
                 w="90%"
               >
-                <Field name="userName">
+                <Field name="email">
                   {({ field, meta }: { meta: Dict<string>, field: Dict<any> }) => (
                     <>
-                      <FormLabel htmlFor="password">User Name</FormLabel>
+                      <FormLabel htmlFor="email">Email</FormLabel>
                       <InputGroup>
-                        <InputLeftElement
-                          pointerEvents="none"
-                        >
+                        <InputLeftElement pointerEvents="none">
                           <RiUserLine />
                         </InputLeftElement>
                         <Input
@@ -61,7 +60,7 @@ const Login = () => {
                                   // @ts-ignore
                           isInvalid={meta.touched && meta.error}
                           placeholder="User Name"
-                          id="userName"
+                          id="email"
                         />
                       </InputGroup>
                       {meta.touched && meta.error && (
@@ -100,7 +99,7 @@ const Login = () => {
                   )}
                 </Field>
                 <Flex w="100%" justify="flex-end" mt="20px">
-                  <Button variant="outline" type="submit" colorScheme="blue">Login</Button>
+                  <Button variant="outline" type="submit" colorScheme="blue" isLoading={isSubmitting}>Login</Button>
                 </Flex>
               </Box>
             )}

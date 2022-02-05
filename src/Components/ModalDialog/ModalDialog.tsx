@@ -9,6 +9,8 @@ import {
 } from '@chakra-ui/react';
 import React, { FC } from 'react';
 import { ErrorResponse } from '../../Types/Errors.Types';
+import popToast from '../Toasts/PopToast';
+import Logger from '../../Utils/Logger/Logger.Logic';
 
 type props = {
   title: string;
@@ -54,9 +56,9 @@ const ModalDialog :FC<props> = ({
                   onClose();
                 } catch (e) {
                   if (e instanceof ErrorResponse) {
-                    console.log(e.message);
+                    popToast.PopErrorToast(e.message);
                   } else {
-                    console.log(e);
+                    Logger.Error('error while executing action', { error: e });
                   }
                 }
               }}

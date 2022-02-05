@@ -5,14 +5,18 @@ import {
 } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { InputControl, NumberInputControl } from 'formik-chakra-ui';
+import { useSelector } from 'react-redux';
 import { CreateNewTest, initialTestValues, validationTestSchema } from './NewTestForm.Logic';
 import ModalDialog from '../../../../Components/ModalDialog/ModalDialog';
 import { ErrorResponse } from '../../../../Types/Errors.Types';
 import { TEST_IN_PROGRESS_COOKIE_NAME } from '../../../../Utils/Cookies/Cookies.constants';
 import DatePickerField from './DatePickerField';
+import { RootState } from '../../../../Redux/store';
+import { IUser } from '../../../../Types/User.Types';
 
 const NewTestForm = () => {
   const formRef = useRef<any>(null);
+  const userData = useSelector((state: RootState) => state.userData) as unknown as IUser;
   const setCookie = useCookies([TEST_IN_PROGRESS_COOKIE_NAME])[1];
 
   return (
@@ -25,7 +29,7 @@ const NewTestForm = () => {
           if (Object.keys(formRef.current.errors).length === 0) {
             formRef.current.submitForm();
           } else throw new ErrorResponse('form is not valid', 400);
-        } else throw new ErrorResponse('formRef Error', 500);
+        } else throw new ErrorResponse('form Error', 500);
       }}
       acceptButtonText="Create New Test"
       isCancelable
@@ -35,7 +39,7 @@ const NewTestForm = () => {
         <Formik
           innerRef={formRef}
           initialValues={initialTestValues}
-          onSubmit={(values) => CreateNewTest(values, setCookie)}
+          onSubmit={(values) => CreateNewTest(values, setCookie, userData)}
           validationSchema={validationTestSchema}
         >
           {({ handleSubmit }) => (
@@ -49,9 +53,16 @@ const NewTestForm = () => {
                 <InputControl name="labelType" label="Label Type" />
                 <InputControl name="batchNum" label="Batch Number" />
                 <InputControl name="boxNum" label="Box Number" />
+                <NumberInputControl name="setSize" label="Set Size - the amount of barcodes on the drum" />
               </Flex>
               <Flex padding="2%" flex="1" flexDir="column">
-                <InputControl name="testName" label="Test Name" />
+                {userData.tier === 'owner' && (
+                <>
+                  <NumberInputControl name="volume" label="volume" />
+                  <InputControl name="machineNum" label="machine Number" />
+                </>
+                )}
+                <InputControl name="experimentName" label="Test Name" />
                 <DatePickerField name="manufacturingDate" />
                 <NumberInputControl name="incubatorTemp" label="Incubator Temperature In Celsius " />
               </Flex>

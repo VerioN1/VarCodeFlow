@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,6 +26,7 @@ ChartJS.register(
 
 export const options = {
   // aspectRatio: 1,
+  maintainAspectRatio: false,
   responsive: true,
   plugins: {
     legend: {
@@ -38,10 +39,13 @@ export const options = {
   },
 };
 const TestChart : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
-  const [chartData] = useState(chartLogic.prepareData(scans));
+  const [chartData, setChartData] = useState(chartLogic.prepareData(scans));
+  useEffect(() => {
+    setChartData(chartLogic.prepareData(scans));
+  }, [scans]);
   return (
     <Card w="100%">
-      <Line data={chartData} options={options} />
+      <Line data={chartData} options={options} height={14} width={20} />
     </Card>
   );
 };

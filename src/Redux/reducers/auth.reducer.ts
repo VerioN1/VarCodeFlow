@@ -9,6 +9,7 @@ type UserState = {
   email?: string;
   phoneNumber?: string;
   organization?: string;
+  tier?: 'user' | 'admin' | 'owner';
   isAuthenticated: boolean;
 }
 const initialState : UserState = {

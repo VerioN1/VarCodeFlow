@@ -4,26 +4,37 @@ import { useCookies } from 'react-cookie';
 import NewTestForm from './Components/NewTestForm/NewTestForm';
 import { TEST_IN_PROGRESS_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
 import TestRunTime from './Components/TestRunTime/TestRunTime';
+import useFetch from '../../hooks/useFetch/useFetch.hook';
+import { getExperiment } from '../../services/Experiments.services';
+import { IExperiment } from '../../Types/Tests.Types';
 
 const NewTest = () => {
-  const InProgressTestCookie = useCookies([TEST_IN_PROGRESS_COOKIE_NAME])[0];
+  const [InProgressTestCookie, , deleteCookie] = useCookies([TEST_IN_PROGRESS_COOKIE_NAME]);
   const [isTestInProgress, setIsTestInProgress] = useState(false);
-
+  const state = useFetch<IExperiment>('test-details', () => getExperiment(InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]));
   useEffect(() => {
-    // TODO: check if test is in progress and request it
-    if (Object.keys(InProgressTestCookie).length !== 0) {
-      if (InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]?.isTestInProgress)
-        setIsTestInProgress(true);
-      else setIsTestInProgress(false);
-      console.log(InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]);
+    if (state.status === 'succeeded') {
+      // @ts-ignore
+      setIsTestInProgress(state?.data?.isTestInProgress);
+    }// @ts-ignore
+    if (state.status === 'failed' && state.error.status === 403) {
+      deleteCookie(TEST_IN_PROGRESS_COOKIE_NAME);
     }
-  }, [InProgressTestCookie]);
-
+    // @ts-ignore
+    if (state.status === 'failed' && state.error.status === 404) {
+      deleteCookie(TEST_IN_PROGRESS_COOKIE_NAME);
+      window.location.reload();
+    }
+  }, [state.status]);
+  if (state.status === 'loading') return <div>Loading...</div>;
+  // @ts-ignore
+  if (state.status === 'failed' && state.error.status !== 403) return <div>Error</div>;
   return (
     <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">
       {isTestInProgress
-        ? <TestRunTime {...InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]} />
+        ? <TestRunTime experiment={state.data as IExperiment} />
         : <NewTestForm />}
+      {!isTestInProgress && <p>please create new Experiment or Choose from a finished one</p>}
     </Flex>
   );
 };

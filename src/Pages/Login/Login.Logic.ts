@@ -4,34 +4,41 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { login } from '../../Redux/reducers/auth.reducer';
 import Logger from '../../Utils/Logger/Logger.Logic';
-import { USER_TOKEN_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
+import { USER_TOKEN_FIELD } from '../../Utils/Cookies/Cookies.constants';
+import { loginUser } from '../../services/User.services';
 
-export const onSubmit = (
+export const onSubmit = async (
   values: any,
   dispatch: Dispatch<any>,
   navigate: NavigateFunction,
   setUserCookie : any,
 ) => {
   try {
-    dispatch(login(values));
-    // Service call
-    Logger.Log('Login Success', { email: values.userName });
-    setUserCookie(USER_TOKEN_COOKIE_NAME, values, { maxAge: 172800 }); // 2 days
-    navigate('/');
+    const res = await loginUser(values.email, values.password);
+    dispatch(login(res.user));
+    Logger.Log('Login Success', { userName: values.email });
+    setUserCookie(USER_TOKEN_FIELD, res.jwt, { maxAge: 172800 }); // 2 days
+    // REQUIRED else there is a bug with authentication
+    Logger.Log('Login Success', { userName: values.email });
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      Logger.Error('Login Failure', { email: values.email, error: err.toString() });
+      // @ts-ignore
+      Logger.Error('Login Failure - Email Or Password are not correct', { error: err, email: values.email });
     } else {
-      Logger.Error('Login Failure', { email: values.email, error: 'Logic Error' });
+      // @ts-ignore
+      Logger.Error('Login Failure', { email: values.email, error: err.toString() });
     }
   }
 };
 
 export const initialValues = {
-  userName: '',
+  email: '',
   password: '',
 };
 export const validationSchema = Yup.object({
-  userName: Yup.string().required('User Name is required'),
+  email: Yup.string().required('User Name is required'),
   password: Yup.string().required(),
 });

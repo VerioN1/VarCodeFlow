@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  Box, Button, Flex, Heading, Image, Link, Select,
+  Box, Button, Flex, Heading, Image, Select,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { InputControl } from 'formik-chakra-ui';
@@ -10,6 +10,7 @@ import { RootState } from '../../Redux/store';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from '../Register/Register.Logic';
 import Card from '../../Components/Card/Card';
+import OrganizationForm from './Components/OrganizationForm';
 
 const Register = () => {
   const userData = useSelector((state:RootState) => state.userData);
@@ -50,12 +51,12 @@ const Register = () => {
                   <InputControl name="email" label="Email" />
                 </Flex>
                 <Flex padding="2%" flex="1" flexDir="column">
-                  <InputControl name="userName" label="User Name" />
+                  <InputControl name="userName" label="User Name change and delet" />
                   <InputControl name="password" label="Password" />
                   <Select mt="2rem" placeholder="Select Organization">
                     <option value="option1">Option 1</option>
                   </Select>
-                  <Link href="/Register"> Or Create New Orgnaization </Link>
+                  <OrganizationForm />
                   <Button type="submit" colorScheme="blue" alignSelf="flex-end">Create User</Button>
                 </Flex>
               </Box>

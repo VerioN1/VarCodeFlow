@@ -1,6 +1,14 @@
-export interface ITest {
-    testId: number;
-    testName: string;
+export interface IScan {
+    date: string;
+    barCode: string;
+    round: string;
+}
+export interface IExperiment {
+    _id: string;
+    setSize: number;
+    experimentOwner: string;
+    experimentOrganization: string;
+    experimentName: string;
     labelType: string;
     manufacturingDate: Date;
     batchNum: string;
@@ -12,9 +20,5 @@ export interface ITest {
     deactivationDate?: string;
     volume?: number;
     comments?: string;
-}
-export interface IScan {
-    testID?: string;
-    date: string;
-    barCode: string;
+    scans: IScan[];
 }
