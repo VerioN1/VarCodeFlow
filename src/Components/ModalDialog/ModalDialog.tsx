@@ -58,7 +58,7 @@ const ModalDialog :FC<props> = ({
                   if (e instanceof ErrorResponse) {
                     popToast.PopErrorToast(e.message);
                   } else {
-                    Logger.Error('error while executing action', { error: e });
+                    Logger.Error('error while sending data, please try again', { error: e });
                   }
                 }
               }}

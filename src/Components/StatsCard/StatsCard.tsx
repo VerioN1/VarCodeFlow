@@ -7,7 +7,7 @@ interface StatsCardProps {
     title: string;
     textSize?: string | object;
     stat: string;
-    icon: ReactNode;
+    icon?: ReactNode;
 }
 const StatsCard = (props: StatsCardProps) => {
   const { title, stat, icon } = props;

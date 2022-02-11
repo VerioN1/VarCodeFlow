@@ -6,14 +6,14 @@ import TestDataPlots from './TestDataPlots';
 
 interface PreviewTestProps {
     testMetaData: IExperiment,
-    metaDataChildren: React.ReactNode,
+    metaDataChildren?: React.ReactNode,
     testScans:IScan[]
 }
 
-const PreviewTest : FC<PreviewTestProps> = (props) => (
+const PreviewTest : FC<PreviewTestProps> = ({ testMetaData, metaDataChildren, testScans }) => (
   <Flex w="100%" flexDir="column" h="100%">
-    <TestMetaData {...props.testMetaData} children={props.metaDataChildren} />
-    <TestDataPlots testData={props.testScans} />
+    <TestMetaData {...testMetaData} children={metaDataChildren} />
+    <TestDataPlots testData={testScans} />
   </Flex>
 );
 export default PreviewTest;

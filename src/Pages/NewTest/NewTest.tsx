@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Flex } from '@chakra-ui/react';
-import { useCookies } from 'react-cookie';
+import { useParams } from 'react-router-dom';
 import NewTestForm from './Components/NewTestForm/NewTestForm';
 import { TEST_IN_PROGRESS_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
 import TestRunTime from './Components/TestRunTime/TestRunTime';
 import useFetch from '../../hooks/useFetch/useFetch.hook';
 import { getExperiment } from '../../services/Experiments.services';
 import { IExperiment } from '../../Types/Tests.Types';
+import { deleteCookie, getCookie } from '../../Utils/Cookies/CookiesHandler';
 
 const NewTest = () => {
-  const [InProgressTestCookie, , deleteCookie] = useCookies([TEST_IN_PROGRESS_COOKIE_NAME]);
+  const { testId } = useParams();
   const [isTestInProgress, setIsTestInProgress] = useState(false);
-  const state = useFetch<IExperiment>('test-details', () => getExperiment(InProgressTestCookie[TEST_IN_PROGRESS_COOKIE_NAME]));
+  const state = useFetch<IExperiment>('test-details', () => getExperiment(getCookie(TEST_IN_PROGRESS_COOKIE_NAME) ?? testId));
   useEffect(() => {
     if (state.status === 'succeeded') {
       // @ts-ignore

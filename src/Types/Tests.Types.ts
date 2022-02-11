@@ -5,7 +5,7 @@ export interface IScan {
 }
 export interface IExperiment {
     _id: string;
-    setSize: number;
+    drumInterval: number;
     experimentOwner: string;
     experimentOrganization: string;
     experimentName: string;

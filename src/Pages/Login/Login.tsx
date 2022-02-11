@@ -6,24 +6,16 @@ import { Field, Formik } from 'formik';
 import { RiLockPasswordLine, RiUserLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
+import React from 'react';
 import { Dict } from '../../Types/Utils.Types';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from './Login.Logic';
-import { USER_TOKEN_FIELD } from '../../Utils/Cookies/Cookies.constants';
 import Card from '../../Components/Card/Card';
+import { AuthStatus } from '../../hooks/useAuth/useAuth.hook';
 
-const Login = () => {
+const Login = ({ setAuthStatus } : {setAuthStatus : React.Dispatch<React.SetStateAction<AuthStatus>>}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [userCookie, setUserCookie] = useCookies([USER_TOKEN_FIELD]);
-  useEffect(() => {
-    if (userCookie[USER_TOKEN_FIELD]) {
-      navigate('/');
-    }
-  }, []);
-
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
       <Card>
@@ -37,7 +29,7 @@ const Login = () => {
           <Heading m="5" mb="0" as="h4" size="md">VarCode Flow</Heading>
           <Formik
             initialValues={initialValues}
-            onSubmit={(values) => onSubmit(values, dispatch, navigate, setUserCookie)}
+            onSubmit={(values) => onSubmit(values, dispatch, navigate, setAuthStatus)}
             validationSchema={validationSchema}
           >
             {({ handleSubmit, isSubmitting }) => (

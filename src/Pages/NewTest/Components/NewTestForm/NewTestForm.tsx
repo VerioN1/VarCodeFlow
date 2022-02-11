@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { useCookies } from 'react-cookie';
 import {
   Box, Flex, Heading,
 } from '@chakra-ui/react';
@@ -9,7 +8,6 @@ import { useSelector } from 'react-redux';
 import { CreateNewTest, initialTestValues, validationTestSchema } from './NewTestForm.Logic';
 import ModalDialog from '../../../../Components/ModalDialog/ModalDialog';
 import { ErrorResponse } from '../../../../Types/Errors.Types';
-import { TEST_IN_PROGRESS_COOKIE_NAME } from '../../../../Utils/Cookies/Cookies.constants';
 import DatePickerField from './DatePickerField';
 import { RootState } from '../../../../Redux/store';
 import { IUser } from '../../../../Types/User.Types';
@@ -17,7 +15,6 @@ import { IUser } from '../../../../Types/User.Types';
 const NewTestForm = () => {
   const formRef = useRef<any>(null);
   const userData = useSelector((state: RootState) => state.userData) as unknown as IUser;
-  const setCookie = useCookies([TEST_IN_PROGRESS_COOKIE_NAME])[1];
 
   return (
     <ModalDialog
@@ -39,7 +36,7 @@ const NewTestForm = () => {
         <Formik
           innerRef={formRef}
           initialValues={initialTestValues}
-          onSubmit={(values) => CreateNewTest(values, setCookie, userData)}
+          onSubmit={(values) => CreateNewTest(values, userData)}
           validationSchema={validationTestSchema}
         >
           {({ handleSubmit }) => (
@@ -53,7 +50,7 @@ const NewTestForm = () => {
                 <InputControl name="labelType" label="Label Type" />
                 <InputControl name="batchNum" label="Batch Number" />
                 <InputControl name="boxNum" label="Box Number" />
-                <NumberInputControl name="setSize" label="Set Size - the amount of barcodes on the drum" />
+                <NumberInputControl name="drumInterval" label="last BarCode Interval in seconds" />
               </Flex>
               <Flex padding="2%" flex="1" flexDir="column">
                 {userData.tier === 'owner' && (

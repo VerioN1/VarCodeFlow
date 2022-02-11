@@ -11,7 +11,6 @@
 }
 .nav-button-dark:hover{
     color: #90CDF4;
-    border-bottom: #2B6CB0 solid 3px;
 }
 .active-dark {
     color: #90CDF4;
@@ -30,7 +29,6 @@
 }
 .nav-button-light:hover{
     color: #3182CE;
-    border-bottom: #2C5282 solid 3px;
 }
 .active-light {
     color: #3182CE;

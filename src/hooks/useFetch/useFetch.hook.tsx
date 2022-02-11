@@ -3,7 +3,7 @@ import { Dict } from '@chakra-ui/utils';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 export type Status = 'idle' | 'loading' | 'succeeded' | 'failed';
-export type Response<F> = F | undefined | F[];
+export type Response<F> = F | undefined;
 type ERROR = Error | undefined | null | string | AxiosError | AxiosResponse;
 export type StateType<F> = {
   status: Status;
@@ -21,7 +21,7 @@ const useFetch = <T extends any>(url: string, serviceFunc : Function) => {
   const initialState : StateType<T> = {
     status: 'idle',
     error: null,
-    data: [],
+    data: undefined,
   };
   // eslint-disable-next-line no-shadow
   const [state, dispatch] = useReducer((state: StateType<T>, action: Action<T>):StateType<T> => {

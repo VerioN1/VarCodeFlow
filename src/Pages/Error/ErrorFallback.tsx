@@ -13,6 +13,7 @@ const ErrorFallback :FC<props> = ({ error, resetErrorBoundary }) => {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
+      <p>--please refresh--</p>
       <pre>{error.message}</pre>
       <button type="button" onClick={resetErrorBoundary}>Try again</button>
     </div>

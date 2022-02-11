@@ -1,4 +1,4 @@
-export interface IOrganization {
+export type IOrganization = {
   contactName: string;
   contactEmail: string;
   organizationName: string;

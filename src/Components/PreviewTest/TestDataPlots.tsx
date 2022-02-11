@@ -10,11 +10,11 @@ interface TestDataPlotsProps {
 }
 
 const TestDataPlots : FC<TestDataPlotsProps> = ({ testData }) => (
-  <Flex w="100%" flexDir={{ base: 'column', '2xl': 'row' }} mt="1em">
+  <Flex w="100%" flexDir={{ base: 'column', xl: 'row' }} mt="1em">
     <Flex flexDir="column" justify="center" align="center" m="1%" flex="1">
       <TestChart scans={testData} />
     </Flex>
-    <Flex flexDir="column" justify="center" align="center" m="1%" flex="1">
+    <Flex flexDir="column" justify="center" align="center" m="1%" maxW={{ base: '100%', xl: '40%' }}>
       <TestsTable scans={testData} />
     </Flex>
   </Flex>

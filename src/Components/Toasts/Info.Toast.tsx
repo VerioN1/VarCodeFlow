@@ -27,7 +27,9 @@ const InfoToast = ({ message }: {message: string}) => (
       <Box mx={-3} py={2} px={4}>
         <Box mx={3}>
           <chakra.span
-            color={useColorModeValue('blue.500', 'blue.400')}
+            // color={useColorModeValue('blue.500', 'blue.400')}
+            color="black"
+            fontSize="lg"
             fontWeight="bold"
           >
             Info

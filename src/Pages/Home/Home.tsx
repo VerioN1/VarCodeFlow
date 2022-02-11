@@ -1,17 +1,15 @@
 import React from 'react';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex, Image } from '@chakra-ui/react';
+import varcodeLogo from '../../Assets/varcode-logo.png';
 
 const Home = () => (
   <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">
-    <Text
-      bgGradient="linear(to-l, #7928CA, #FF0080)"
-      bgClip="text"
-      fontSize="6xl"
-      fontWeight="extrabold"
-    >
-      Var Code
-      {' '}
-    </Text>
+    <Image
+      src={varcodeLogo}
+      alt="Barcode"
+      htmlHeight="200px"
+      htmlWidth="400px"
+    />
   </Flex>
 );
 

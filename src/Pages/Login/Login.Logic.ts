@@ -2,27 +2,28 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { NavigateFunction } from 'react-router-dom';
 import * as Yup from 'yup';
 import axios from 'axios';
+import React from 'react';
 import { login } from '../../Redux/reducers/auth.reducer';
 import Logger from '../../Utils/Logger/Logger.Logic';
 import { USER_TOKEN_FIELD } from '../../Utils/Cookies/Cookies.constants';
 import { loginUser } from '../../services/User.services';
+import { createCookie } from '../../Utils/Cookies/CookiesHandler';
+import { AuthStatus } from '../../hooks/useAuth/useAuth.hook';
 
 export const onSubmit = async (
   values: any,
   dispatch: Dispatch<any>,
   navigate: NavigateFunction,
-  setUserCookie : any,
+  setAuth: React.Dispatch<React.SetStateAction<AuthStatus>>,
 ) => {
   try {
     const res = await loginUser(values.email, values.password);
+    console.log(res);
     dispatch(login(res.user));
-    Logger.Log('Login Success', { userName: values.email });
-    setUserCookie(USER_TOKEN_FIELD, res.jwt, { maxAge: 172800 }); // 2 days
-    // REQUIRED else there is a bug with authentication
-    Logger.Log('Login Success', { userName: values.email });
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
+    Logger.Log('Login Success', { userName: values.email, jwt: res.jwt });
+    createCookie(USER_TOKEN_FIELD, res.jwt); // 2 days
+    setAuth('loggedIn');
+    navigate('/');
   } catch (err) {
     if (axios.isAxiosError(err)) {
       // @ts-ignore

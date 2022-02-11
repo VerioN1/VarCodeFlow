@@ -17,7 +17,7 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
   isTestInProgress,
   labelType,
   _id,
-  setSize,
+  drumInterval,
   experimentName,
 }) => (
   <Card>
@@ -34,7 +34,7 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
       <StatsCard title="Test Start Date" textSize={{ base: 'lg', '2xl': '2xl' }} stat={activationDate ?? 'No Date'} icon={<BsCalendarDate size="3em" />} />
       <StatsCard title="Incubator Temp" stat={`${incubatorTemp?.toString()} °C`} icon={<RiTempHotLine size="3em" />} />
       <StatsCard title="Test Status" stat={isTestInProgress ? 'In Progress' : 'Finished'} icon={isTestInProgress ? <CgSpinnerTwoAlt className="icon-spin" size="3em" /> : <MdDone size="3em" />} />
-      <StatsCard title="Drum Size" stat={`${setSize?.toString()}`} icon={<BsStack size="3em" />} />
+      <StatsCard title="Drum Interval" stat={`${drumInterval?.toString()}'s`} icon={<BsStack size="3em" />} />
     </SimpleGrid>
     {children}
   </Card>

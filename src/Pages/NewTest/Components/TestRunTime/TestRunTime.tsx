@@ -10,36 +10,43 @@ import FinishTestDialog from '../FinishTestDialog/FinishTestDialog';
 import dateFormat from '../../../../Utils/Time/Date.Format';
 import SubmitScans from './TestRunTime.Logic';
 import Logger from '../../../../Utils/Logger/Logger.Logic';
+import popToast from '../../../../Components/Toasts/PopToast';
 
 const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
   const [isPaused, setIsPaused] = useState(false);
   const [scans, setScans] = useState<IScan[]>([]);
-  const counterRef = useRef(1);
-  const roundCounterRef = useRef(Number(experiment.scans[experiment.scans.length - 1].round) + 1 ?? 0);
+  const timeoutInSeconds = experiment.drumInterval * 1000;
+  const roundCounterRef = useRef(experiment?.scans?.length > 0 ? Number(experiment.scans[experiment.scans.length - 1].round) + 1 : 0);
+  console.log(roundCounterRef.current);
   const [barCodeValue, setBarCodeValue] = useState('');
   const [scansBundleForCharts, setScansBundleForCharts] = useState(experiment.scans.slice(-100));
   const refInput = useRef<HTMLInputElement>();
 
   const handleOnChange = (e: { target: { value: any; }; }) => {
     const { value } = e.target;
-    console.log(value);
-    if (value.length > 10) {
+    if (value.length > 9) {
       setScans((prev) => [...prev, { barCode: value, date: dateFormat.formatDateAndTime(new Date()), round: roundCounterRef.current.toString() }]);
-      counterRef.current += 1;
       setBarCodeValue('');
-      Logger.Log('Scan added', { toast: 'true' });
+      Logger.Log(`Scan added ${value}`, { toast: 'true' });
     } else {
       setBarCodeValue(value);
     }
   };
   useEffect(() => {
-    if (counterRef.current > experiment.setSize) {
-      counterRef.current = 1;
+    const timerForSet = setInterval(() => {
+      console.log(scans);
+      if (isPaused || scans.length === 0) {
+        return;
+      }
       roundCounterRef.current += 1;
-      SubmitScans(experiment._id, scans);
-      setScansBundleForCharts((prev) => [...prev.slice(-90), ...scans]);
       setScans([]);
-    }
+      setScansBundleForCharts((prev) => [...prev.slice(-90), ...scans]);
+      SubmitScans(experiment._id, scans);
+      popToast.PopSuccessToast('Scans sent');
+    }, timeoutInSeconds);
+    return () => {
+      clearInterval(timerForSet);
+    };
   }, [scans]);
 
   useEffect(() => {

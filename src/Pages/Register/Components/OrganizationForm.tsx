@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import { Box, Flex, Heading } from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
@@ -10,7 +10,10 @@ import {
   validationTestSchema,
 } from './OrganizationForm.logic';
 
-const OrganizationForm = () => {
+type props = {
+    setOrganizationDetails: React.Dispatch<React.SetStateAction<any>>;
+}
+const OrganizationForm : FC<props> = ({ setOrganizationDetails }) => {
   const formRef = useRef<any>(null);
 
   return (
@@ -27,7 +30,7 @@ const OrganizationForm = () => {
         if (formRef.current) {
           if (Object.keys(formRef.current.errors).length === 0) {
             formRef.current.submitForm();
-          } else throw new ErrorResponse('form is not valid', 400);
+          } else throw new ErrorResponse("you haven't filled the form properly", 400);
         } else throw new ErrorResponse('formRef Error', 500);
       }}
       acceptButtonText="Create New Organization"
@@ -38,7 +41,7 @@ const OrganizationForm = () => {
         <Formik
           innerRef={formRef}
           initialValues={initialTestValues}
-          onSubmit={(values) => CreateOrganization(values)}
+          onSubmit={(values) => CreateOrganization(values, setOrganizationDetails)}
           validationSchema={validationTestSchema}
         >
           {({ handleSubmit }) => (

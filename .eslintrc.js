@@ -43,6 +43,7 @@ module.exports = {
     'nonblock-statement-body-position': 'off',
     'no-underscore-dangle': 'off',
     'max-len': 'off',
+    'react/jsx-no-useless-fragment': 'off',
     curly: 'off',
   },
 };
