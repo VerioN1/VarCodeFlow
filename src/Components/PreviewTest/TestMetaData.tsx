@@ -5,7 +5,7 @@ import { FiType } from 'react-icons/fi';
 import { BsCalendarDate, BsStack } from 'react-icons/bs';
 import { RiTempHotLine } from 'react-icons/ri';
 import { CgSpinnerTwoAlt } from 'react-icons/cg';
-import { MdDone } from 'react-icons/md';
+import { MdDone, MdOutlineAccessTime } from 'react-icons/md';
 import StatsCard from '../StatsCard/StatsCard';
 import Card from '../Card/Card';
 import { IExperiment } from '../../Types/Tests.Types';
@@ -34,7 +34,7 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
       <StatsCard title="Test Start Date" textSize={{ base: 'lg', '2xl': '2xl' }} stat={activationDate ?? 'No Date'} icon={<BsCalendarDate size="3em" />} />
       <StatsCard title="Incubator Temp" stat={`${incubatorTemp?.toString()} °C`} icon={<RiTempHotLine size="3em" />} />
       <StatsCard title="Test Status" stat={isTestInProgress ? 'In Progress' : 'Finished'} icon={isTestInProgress ? <CgSpinnerTwoAlt className="icon-spin" size="3em" /> : <MdDone size="3em" />} />
-      <StatsCard title="Drum Interval" stat={`${drumInterval?.toString()}'s`} icon={<BsStack size="3em" />} />
+      <StatsCard title="Drum Interval" stat={`${drumInterval?.toString()}'s`} icon={<MdOutlineAccessTime size="3em" />} />
     </SimpleGrid>
     {children}
   </Card>
