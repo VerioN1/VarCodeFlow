@@ -24,7 +24,7 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
 
   const handleOnChange = (e: { target: { value: any; }; }) => {
     const { value } = e.target;
-    if (value.length > 9) {
+    if (value.length > 11) {
       setScans((prev) => [...prev, { barCode: value, date: dateFormat.formatDateAndTime(new Date()), round: roundCounterRef.current.toString() }]);
       setBarCodeValue('');
       Logger.Log(`Scan added ${value}`, { toast: 'true' });
@@ -34,7 +34,6 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
   };
   useEffect(() => {
     const timerForSet = setInterval(() => {
-      console.log(scans);
       if (isPaused || scans.length === 0) {
         return;
       }
