@@ -48,3 +48,10 @@ html{
   }
 }
 
+.exportToExcelButton {
+  background: #2a87d0;
+  border-radius: 20px;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+}

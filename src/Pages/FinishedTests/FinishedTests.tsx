@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { Flex, SimpleGrid, Button } from '@chakra-ui/react';
+import { Flex, SimpleGrid } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 // @ts-ignore
 import { ExportJsonCsv } from 'react-export-json-csv';
@@ -40,7 +40,7 @@ const FinishedTests = () => {
             <Flex w={{ base: '90%', xl: '70%' }} mt="1rem">
               <PreviewTest
                 testMetaData={state.data}
-                testScans={state.data.scans}
+                testScans={state.data.scans.slice(-300)}
                 metaDataChildren={(
                   <SimpleGrid columns={{ base: 3, '2xl': 6 }} spacing={{ base: 5, lg: 8 }} mt="0.9rem">
                     <StatsCard title="Finished on" textSize={{ base: 'lg', '2xl': '2xl' }} stat={`${state.data.deactivationDate?.toString()}`} icon={<MdTimerOff size="3em" />} />
@@ -49,9 +49,7 @@ const FinishedTests = () => {
                     {userData.tier !== 'user' && <StatsCard title="volume" stat={`${state.data.volume?.toString()}`} icon={<FaMountain size="3em" />} />}
                     {userData.tier !== 'user' && <StatsCard title="Machine Number" stat={`${state.data.machineNum?.toString()}`} icon={<AiOutlineFieldNumber size="3em" />} />}
                     <StatsCard title="Owner" textSize={{ base: 'lg', '2xl': '2xl' }} stat={`${state.data.experimentOwner?.toString()}`} />
-                    <Button colorScheme="green">
-                      <ExportJsonCsv fileTitle={`${state.data.experimentName}-${state.data._id}.csv`} headers={headers()} items={state.data.scans}>Export To Excel</ExportJsonCsv>
-                    </Button>
+                    <ExportJsonCsv className="exportToExcelButton" fileTitle={`${state.data.experimentName}-${state.data._id}.csv`} headers={headers()} items={state.data.scans}>Export To Excel</ExportJsonCsv>
                   </SimpleGrid>
                 )}
               />

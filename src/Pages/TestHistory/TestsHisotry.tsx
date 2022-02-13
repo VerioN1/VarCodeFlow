@@ -11,20 +11,19 @@ import FetchWrapper from '../../Components/FetchWrapper/FetchWrapper';
 
 const TestsHistory = () => {
   const userData = useSelector((state: any) => state.userData);
-  console.log(userData._id);
   const state = useFetch<IExperiment[]>('tests-history', () => getExperimentsForUser(userData.email));
   const navigate = useNavigate();
 
   return (
     <FetchWrapper state={state}>
       <Flex w="70%" pt="10%" h="50%" align="center" justify="center">
-        <Table variant="striped" colorScheme="teal">
+        <Table variant="simple" colorScheme="blue">
           <TableCaption>Those are all your recent tests</TableCaption>
           <Thead>
             <Tr>
               <Th>Experiment Date</Th>
               <Th>Experiment Start Date</Th>
-              <Th>Is test in progress</Th>
+              <Th>Is test Finished?</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -37,7 +36,7 @@ const TestsHistory = () => {
               >
                 <Td>{item.experimentName}</Td>
                 <Td>{item.activationDate}</Td>
-                <Td>{item.isTestInProgress ? 'Yes' : 'No'}</Td>
+                <Td>{item.isTestInProgress ? 'No' : 'Yes'}</Td>
               </Tr>
             ))}
           </Tbody>
