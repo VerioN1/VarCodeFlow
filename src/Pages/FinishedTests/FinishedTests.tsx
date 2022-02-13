@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Flex, SimpleGrid, Button } from '@chakra-ui/react';
-import { BsStack } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 // @ts-ignore
 import { ExportJsonCsv } from 'react-export-json-csv';
-import {
-  AiOutlineFieldNumber, FaMountain, GiBackwardTime, GiOrganigram, MdTimerOff,
-} from 'react-icons/all';
+import { AiOutlineFieldNumber } from 'react-icons/ai';
+import { MdTimerOff } from 'react-icons/md';
+import { GiBackwardTime, GiOrganigram } from 'react-icons/gi';
+import { FaMountain } from 'react-icons/fa';
 import useFetch from '../../hooks/useFetch/useFetch.hook';
 import { getExperiment } from '../../services/Experiments.services';
 import PreviewTest from '../../Components/PreviewTest/PreviewTest';
