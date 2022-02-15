@@ -12,14 +12,14 @@ import dateFormat from '../../../../Utils/Time/Date.Format';
 import SubmitScans from './TestRunTime.Logic';
 import Logger from '../../../../Utils/Logger/Logger.Logic';
 import popToast from '../../../../Components/Toasts/PopToast';
+import { resetExperimentActivationDate } from '../../../../services/Experiments.services';
 
 const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
-  const [isPaused, setIsPaused] = useState(false);
   const [scans, setScans] = useState<IScan[]>([]);
   const timeoutInSeconds = experiment.drumInterval * 1000;
   const roundCounterRef = useRef(experiment?.scans?.length > 0 ? Number(experiment.scans[experiment.scans.length - 1].round) + 1 : 0);
   const [barCodeValue, setBarCodeValue] = useState('');
-  const [scansBundleForCharts, setScansBundleForCharts] = useState(experiment.scans.slice(-100));
+  const [scansBundleForCharts, setScansBundleForCharts] = useState(experiment.scans.slice(100));
   const refInput = useRef<HTMLInputElement>();
 
   const handleOnChange = (e: { target: { value: any; }; }) => {
@@ -39,7 +39,7 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
           value.length - 1,
         ),
         round: roundCounterRef.current.toString(),
-        elpasedTime: `${hourseElapsed}:${minutesElapsed}`,
+        elapsedTime: `${hourseElapsed}:${minutesElapsed}`,
         date: dateFormat.formatDateAndTime(new Date()),
       }]);
       setBarCodeValue('');
@@ -51,12 +51,12 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
 
   useEffect(() => {
     const timerForSet = setInterval(() => {
-      if (isPaused || scans.length === 0) {
+      if (scans.length === 0) {
         return;
       }
       roundCounterRef.current += 1;
       setScans([]);
-      setScansBundleForCharts((prev) => [...prev.slice(-100), ...scans]);
+      setScansBundleForCharts((prev) => [...prev.slice(100), ...scans]);
       SubmitScans(experiment._id, scans);
       popToast.PopSuccessToast('Scans sent');
     }, timeoutInSeconds);
@@ -67,18 +67,26 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (isPaused) {
-        return;
-      }
-      if (refInput.current && !isPaused) {
+      if (refInput.current) {
         refInput.current.focus();
       }
     }, 2000);
     return () => {
       clearInterval(interval);
     };
-  }, [isPaused]);
+  }, []);
 
+  const onResetTimer = async () => {
+    try {
+      await resetExperimentActivationDate(experiment._id);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+      popToast.PopSuccessToast('Timer reset');
+    } catch (e) {
+      Logger.Error("Can't reset timer", { error: e });
+    }
+  };
   return (
     <PreviewTest
       testMetaData={experiment}
@@ -86,10 +94,7 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
         <Flex justify="space-around" mt="1rem">
           {/* @ts-ignore */}
           <Input ref={refInput} value={barCodeValue} onChange={handleOnChange} type="text" placeholder="Barcode scanner typer" w="50%" />
-          {isPaused
-            ? <Button w="15%" colorScheme="green" onClick={() => setIsPaused((prev) => !prev)}>Resume</Button>
-            : <Button onClick={() => setIsPaused((prev) => !prev)} w="15%" colorScheme="yellow">Pause</Button>}
-          {/* eslint-disable-next-line no-underscore-dangle,react/destructuring-assignment */}
+          <Button w="15%" colorScheme="green" onClick={onResetTimer}>Reset Test Timer</Button>
           <FinishTestDialog testId={experiment._id} />
         </Flex>
       )}

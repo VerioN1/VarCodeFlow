@@ -15,6 +15,7 @@ const StatsCard = (props: StatsCardProps) => {
     <Stat
       px={{ base: 2, md: 4 }}
       py="1em"
+      // minW="15rem"
       shadow="xl"
       border="1px solid"
       borderColor={useColorModeValue('gray.800', 'gray.500')}

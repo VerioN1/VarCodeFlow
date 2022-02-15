@@ -9,8 +9,13 @@ import Card from '../../Card/Card';
 import { IScan } from '../../../Types/Tests.Types';
 
 const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
+  const [isTheSame, setIsTheSame] = React.useState(false);
   const data = React.useMemo(
-    () => scans,
+    () => {
+      if (scans) {
+        return scans.map((scan) => ({ ...scan, elapsedTime: scan.elpasedTime ?? scan.elapsedTime }));
+      } return [];
+    },
     [scans],
   );
 
@@ -21,9 +26,17 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
         accessor: 'date',
       },
       {
+        Header: 'Elapsed Time',
+        accessor: 'elapsedTime',
+      },
+      {
+        Header: 'Bar Code QC',
+        accessor: 'QC',
+        isNumeric: true,
+      },
+      {
         Header: 'Bar Code',
         accessor: 'barCode',
-        isNumeric: true,
       },
       {
         Header: 'Drum Round #',
@@ -63,10 +76,20 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
           ))}
         </Thead>
         <Tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()}>
+            if (row.values.round === rows[index - 1]?.values.round || index === 0) {
+              return (
+                <Tr {...row.getRowProps()}>
+                  {row.cells.map((cell) => (
+                    <Td {...cell.getCellProps()}>
+                      {cell.render('Cell')}
+                    </Td>
+                  ))}
+                </Tr>
+              );
+            } return (
+              <Tr {...row.getRowProps()} background="blue.300">
                 {row.cells.map((cell) => (
                   <Td {...cell.getCellProps()}>
                     {cell.render('Cell')}

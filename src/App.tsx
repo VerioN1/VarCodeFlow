@@ -15,7 +15,7 @@ import ErrorPage from './Components/FetchWrapper/ErrorPage';
 const App :FC = () => (
   <>
     <Navbar />
-    <Flex minH="93vh" w="100%" justify="center">
+    <Flex h="100%" w="100%" justify="center" overflowY="auto">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Register" element={<Register />} />

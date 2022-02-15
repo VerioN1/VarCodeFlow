@@ -2,14 +2,14 @@
 import { IScan } from '../../../Types/Tests.Types';
 
 const prepareData = (data : IScan[]) => {
-  const barCodeSubstring = (str : string) => str.substring(
-    str.length - 2,
-    str.length - 1,
-  );
+  let currentRound = '-1';
   const dataSet = data.reduce((r, a) => {
     // eslint-disable-next-line no-param-reassign
-    r[a.round] = r[a.round] || [];
-    r[a.round].push({ ...a, QC: barCodeSubstring(a.barCode) });
+    if (a.round !== currentRound.substring(' ')[0]) {
+      currentRound = `${a.round}-${a.elapsedTime ?? a.elpasedTime}`;
+    }
+    r[currentRound] = r[currentRound] || [];
+    r[currentRound].push({ ...a, QC: a.QC });
     return r;
   }, Object.create(null));
   // const dataSet = groupBy(data);

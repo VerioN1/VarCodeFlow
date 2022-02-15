@@ -2,6 +2,8 @@ export interface IScan {
     date: string;
     barCode: string;
     round: string;
+    QC: string;
+    elapsedTime: string;
 }
 export interface IExperiment {
     _id: string;

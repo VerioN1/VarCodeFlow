@@ -25,7 +25,7 @@ const NewTestForm = () => {
         if (formRef.current) {
           if (Object.keys(formRef.current.errors).length === 0) {
             formRef.current.submitForm();
-          } else throw new ErrorResponse('form is not valid', 400);
+          } else throw new ErrorResponse('Please Finish Filling The Form Properly', 400);
         } else throw new ErrorResponse('form Error', 500);
       }}
       acceptButtonText="Create New Test"

@@ -14,6 +14,7 @@ body {
 }
 html{
   overflow-x: hidden;
+  overflow-y: auto;
 }
 .date-picker{
   width: 100%;

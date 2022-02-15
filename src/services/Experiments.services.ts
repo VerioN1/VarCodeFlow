@@ -1,5 +1,6 @@
 import customAxios from './axiox.config';
 import { IExperiment, IScan } from '../Types/Tests.Types';
+import fd from '../Utils/Time/Date.Format';
 
 export const createNewExperiment = async (experiment: IExperiment) => {
   const { data } = await customAxios.loggedInAxios.post('/Experiment', experiment);
@@ -11,7 +12,6 @@ export const finishExperiment = async (experimentId: string, otherFields: any) =
 };
 export const getExperiment = async (experimentId: string) => {
   const { data } = await customAxios.loggedInAxios.get(`/Experiment/${experimentId}`);
-  console.log(data);
   return data;
 };
 export const submitScans = async (experimentId: string, scans: IScan[]) => {
@@ -19,8 +19,10 @@ export const submitScans = async (experimentId: string, scans: IScan[]) => {
   return data;
 };
 export const getExperimentsForUser = async (userEmail : string) => {
-  console.log(userEmail);
   const { data } = await customAxios.loggedInAxios.get(`/Experiment/${userEmail}/userExperiments`);
-  console.log(data);
+  return data;
+};
+export const resetExperimentActivationDate = async (experimentId: string) => {
+  const { data } = await customAxios.loggedInAxios.put(`/Experiment/${experimentId}/ResetTimer`, { newActivationTime: fd.formatDateAndTime(new Date()) });
   return data;
 };

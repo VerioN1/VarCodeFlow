@@ -8,11 +8,12 @@ import useFetch from '../../hooks/useFetch/useFetch.hook';
 import { getExperiment } from '../../services/Experiments.services';
 import { IExperiment } from '../../Types/Tests.Types';
 import { deleteCookie, getCookie } from '../../Utils/Cookies/CookiesHandler';
+import Loader from '../../Components/FetchWrapper/Loader';
 
 const NewTest = () => {
   const { testId } = useParams();
   const [isTestInProgress, setIsTestInProgress] = useState(false);
-  const state = useFetch<IExperiment>('test-details', () => getExperiment(getCookie(TEST_IN_PROGRESS_COOKIE_NAME) ?? testId));
+  const state = useFetch<IExperiment>('test-details', () => getExperiment(testId === 'fresh' ? getCookie(TEST_IN_PROGRESS_COOKIE_NAME) : testId));
   useEffect(() => {
     if (state.status === 'succeeded') {
       // @ts-ignore
@@ -22,14 +23,13 @@ const NewTest = () => {
       deleteCookie(TEST_IN_PROGRESS_COOKIE_NAME);
     }
     // @ts-ignore
-    if (state.status === 'failed' && state.error.status === 404) {
+    if (state.status === 'failed' && state.error.status === 404 && testId !== 'fresh') {
       deleteCookie(TEST_IN_PROGRESS_COOKIE_NAME);
       window.location.reload();
     }
   }, [state.status]);
-  if (state.status === 'loading') return <div>Loading...</div>;
-  // @ts-ignore
-  if (state.status === 'failed' && state.error.status !== 403) return <div>Error</div>;
+  if (state.status === 'loading') return <Loader />;
+
   return (
     <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">
       {isTestInProgress
