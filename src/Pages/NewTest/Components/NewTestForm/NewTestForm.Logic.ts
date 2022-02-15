@@ -39,9 +39,9 @@ export const initialTestValues = {
   batchNum: '',
   boxNum: '',
   manufacturingDate: new Date(),
-  incubatorTemp: 0, // TODO: add machine number and volume CC to VARCODE employees
-  drumInterval: 10,
-  machineNum: 'null',
+  incubatorTemp: 0,
+  drumInterval: 30,
+  machineNum: '0',
   volume: 0,
 };
 export const validationTestSchema = Yup.object({

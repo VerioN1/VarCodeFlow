@@ -26,13 +26,12 @@ const SuccessToast = ({ message }: {message: string}) => (
 
       <Box mx={-3} py={2} px={4}>
         <Box mx={3}>
-          <chakra.span
+          <chakra.p
             // color={useColorModeValue('green.500', 'green.400')}
             color="black"
-            fontWeight="bold"
           >
             Success
-          </chakra.span>
+          </chakra.p>
           <chakra.p
             color={useColorModeValue('gray.600', 'gray.200')}
             fontSize="sm"

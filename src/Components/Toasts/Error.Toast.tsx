@@ -26,12 +26,12 @@ const ErrorToast = ({ message }: {message: string}) => (
 
       <Box mx={-3} py={2} px={4}>
         <Box mx={3}>
-          <chakra.span
+          <chakra.p
             color={useColorModeValue('red.500', 'red.400')}
             fontWeight="bold"
           >
             Error
-          </chakra.span>
+          </chakra.p>
           <chakra.p
             color={useColorModeValue('gray.600', 'gray.200')}
             fontSize="sm"

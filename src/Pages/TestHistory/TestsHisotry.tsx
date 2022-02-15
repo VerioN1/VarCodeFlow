@@ -21,7 +21,7 @@ const TestsHistory = () => {
           <TableCaption>Those are all your recent tests</TableCaption>
           <Thead>
             <Tr>
-              <Th>Experiment Date</Th>
+              <Th>Experiment Name</Th>
               <Th>Experiment Start Date</Th>
               <Th>Is test Finished?</Th>
             </Tr>

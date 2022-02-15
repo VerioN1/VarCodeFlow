@@ -26,14 +26,13 @@ const InfoToast = ({ message }: {message: string}) => (
 
       <Box mx={-3} py={2} px={4}>
         <Box mx={3}>
-          <chakra.span
+          <chakra.p
             // color={useColorModeValue('blue.500', 'blue.400')}
             color="black"
             fontSize="lg"
-            fontWeight="bold"
           >
             Info
-          </chakra.span>
+          </chakra.p>
           <chakra.p
             color={useColorModeValue('gray.600', 'gray.200')}
             fontSize="sm"
