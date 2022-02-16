@@ -4,15 +4,14 @@ import { IScan } from '../../../Types/Tests.Types';
 const prepareData = (data : IScan[]) => {
   let currentRound = '-1';
   const dataSet = data.reduce((r, a) => {
-    // eslint-disable-next-line no-param-reassign
     if (a.round !== currentRound.substring(' ')[0]) {
-      currentRound = `${a.round}-${a.elapsedTime ?? a.elpasedTime}`;
+      currentRound = `${a.round}-|${a.elapsedTime ?? a.elpasedTime}|`;
     }
+    // eslint-disable-next-line no-param-reassign
     r[currentRound] = r[currentRound] || [];
-    r[currentRound].push({ ...a, QC: a.QC });
+    r[currentRound].push(a);
     return r;
   }, Object.create(null));
-  // const dataSet = groupBy(data);
   return {
     labels: Object.keys(dataSet),
     datasets: [
