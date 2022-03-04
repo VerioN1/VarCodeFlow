@@ -31,7 +31,7 @@ const NewTest = () => {
   if (state.status === 'loading') return <Loader />;
 
   return (
-    <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">
+    <Flex w="100%" minH="100%" flexDir="column" p="2% 4%" align="center">
       {isTestInProgress
         ? <TestRunTime experiment={state.data as IExperiment} />
         : <NewTestForm />}

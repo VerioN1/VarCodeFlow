@@ -1,10 +1,8 @@
-import React, { FC, memo, useEffect } from 'react';
-import { Flex } from '@chakra-ui/react';
+import React, { FC, memo, useState } from 'react';
+import { Flex, Text } from '@chakra-ui/react';
 import { IScan } from '../../Types/Tests.Types';
 import TestChart from './Chart/TestChart';
 import TestsTable from './Table/TestsTable';
-import spliceIntoChunks from './TestDataPlots.Logic';
-import Loader from '../FetchWrapper/Loader';
 
 interface TestDataPlotsProps {
   testData: IScan[];
@@ -12,20 +10,37 @@ interface TestDataPlotsProps {
 }
 
 const TestDataPlots : FC<TestDataPlotsProps> = ({ testData }) => {
-  // const [selectedTest, setSelectedTest] = React.useState<Array<IScan[]>>([]);
-  // useEffect(() => {
-  //   setSelectedTest(spliceIntoChunks(testData, 200));
-  // }, []);
-  const test = 1;
+  const [switchPlace, setSwitchPlace] = useState(window.localStorage.getItem('chartsPlace'));
+  const setSwitch = () => {
+    window.localStorage.setItem('chartsPlace', switchPlace === 'up' ? 'down' : 'up');
+    setSwitchPlace((prev) => (prev === 'up' ? 'down' : 'up'));
+  };
   return (
     <Flex w="100%" flexDir="column" mt="1em">
-      <Flex flexDir="column" justify="center" align="center" maxH="60vh" flex="1">
-        {/* {selectedTest.length > 0 ? <TestChart scans={selectedTest[0]} /> : <Loader />} */}
-        <TestChart scans={testData} />
+      <Flex align="center">
+        <Text mr={2}>Show Table First</Text>
+        <input type="checkbox" onChange={setSwitch} checked={switchPlace === 'up'} />
       </Flex>
-      <Flex flexDir="column" justify="center" align="center" maxH="40vh" m="1%" maxW={{ base: '100%', xl: '40%' }}>
-        <TestsTable scans={testData} />
-      </Flex>
+      {switchPlace === 'up' ? (
+        <>
+          <Flex flexDir="column" justify="center" align="center" maxH="70vh" m="1%" maxW={{ base: '100%' }}>
+            <TestsTable scans={testData} />
+          </Flex>
+          <Flex flexDir="column" justify="center" align="center" maxH="60vh" flex="1">
+            <TestChart scans={testData} />
+          </Flex>
+        </>
+      ) : (
+        <>
+          <Flex flexDir="column" justify="center" align="center" maxH="60vh">
+            <TestChart scans={testData} />
+          </Flex>
+          <Flex flexDir="column" justify="center" align="center" maxH="70vh" m="1%" maxW={{ base: '100%' }}>
+            <TestsTable scans={testData} />
+          </Flex>
+        </>
+      )}
+
     </Flex>
   );
 };

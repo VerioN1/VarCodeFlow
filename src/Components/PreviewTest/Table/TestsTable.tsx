@@ -51,13 +51,14 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
   } = useTable({ columns, data }, useSortBy);
 
   return (
-    <Card w="100%" h="100%" maxH="50vh" overflowY="auto">
+    <Card w="100%" h="100%" overflowY="auto">
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <Th
+                  textAlign="center"
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render('Header')}
@@ -78,20 +79,19 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
         <Tbody {...getTableBodyProps()}>
           {rows.map((row, index) => {
             prepareRow(row);
-            if (row.values.round === rows[index - 1]?.values.round || index === 0) {
-              return (
-                <Tr {...row.getRowProps()}>
-                  {row.cells.map((cell) => (
-                    <Td {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </Td>
-                  ))}
-                </Tr>
-              );
-            } return (
-              <Tr {...row.getRowProps()} borderTop="2px solid #4299e1">
+            return (
+              <Tr
+                {...row.getRowProps()}
+                borderTop={row.values.round === rows[index - 1]?.values.round || index === 0 ? null : '2px solid red'}
+              >
                 {row.cells.map((cell) => (
-                  <Td {...cell.getCellProps()}>
+                  <Td
+                    {...cell.getCellProps()}
+                    textAlign="center"
+                    background={cell.getCellProps().key.toString().includes('QC')
+                      ? ((cell.value === '2' && 'rgb(62,235,102)') || (cell.value === '3' && 'rgb(53, 162, 235)') || (cell.value === '4' && 'rgb(255, 99, 132)'))
+                      : null}
+                  >
                     {cell.render('Cell')}
                   </Td>
                 ))}

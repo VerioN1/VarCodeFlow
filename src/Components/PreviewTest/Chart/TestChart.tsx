@@ -1,4 +1,6 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, {
+  FC, memo, useMemo,
+} from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -39,10 +41,8 @@ export const options = {
   },
 };
 const TestChart : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
-  const [chartData, setChartData] = useState(chartLogic.prepareData(scans));
-  useEffect(() => {
-    setChartData(chartLogic.prepareData(scans));
-  }, [scans]);
+  const chartData = useMemo(() => chartLogic.prepareData(scans), [scans]);
+
   return (
     <Card w="100%">
       <Line data={chartData} options={options} height={14} width={20} />
@@ -50,4 +50,4 @@ const TestChart : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
   );
 };
 
-export default TestChart;
+export default memo(TestChart);

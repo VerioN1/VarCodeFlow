@@ -16,6 +16,7 @@ export const CreateNewTest = async (values : any, userData: IUser) => {
       incubatorTemp: Number(values.incubatorTemp),
       drumInterval: Number(values.drumInterval),
       volume: Number(values.volume),
+      lastScanRound: 0,
       activationDate: fd.formatDateAndTime(new Date()),
       manufacturingDate: fd.FormatDate(values.manufacturingDate),
       experimentOwner: userData.email,

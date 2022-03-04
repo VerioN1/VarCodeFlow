@@ -23,4 +23,5 @@ export interface IExperiment {
     volume?: number;
     comments?: string;
     scans: IScan[];
+    lastScanRound: number;
 }
