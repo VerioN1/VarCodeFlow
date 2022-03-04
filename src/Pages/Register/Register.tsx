@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Box, Button, Flex, Heading, Image, Link, Select,
+  Box, Button, Flex, Heading, Image, Select,
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { InputControl } from 'formik-chakra-ui';
@@ -8,10 +8,14 @@ import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../Redux/store';
 import varcodeLogo from '../../Assets/varcode-logo.png';
-import { initialValues, onSubmit, validationSchema } from '../Register/Register.Logic';
+import { initialValues, onSubmit, validationSchema } from './Register.Logic';
+import Card from '../../Components/Card/Card';
+import OrganizationForm from './Components/OrganizationForm';
+import { IOrganization } from '../../Types/User.Types';
 
 const Register = () => {
   const userData = useSelector((state:RootState) => state.userData);
+  const [organizationDetails, setOrganizationDetails] = useState<IOrganization>();
   const navigate = useNavigate();
   useEffect(() => {
     if (userData?.organization) {
@@ -21,16 +25,7 @@ const Register = () => {
 
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
-      <Flex
-        borderWidth="1px"
-        p="16px"
-        w="90%"
-        boxShadow="lg"
-        h="fit-content"
-        borderRadius="lg"
-        flexDir="column"
-        overflow="hidden"
-      >
+      <Card w="70vw">
         <Image
           src={varcodeLogo}
           alt="Barcode"
@@ -41,7 +36,7 @@ const Register = () => {
           <Heading size="lg">Create new user</Heading>
           <Formik
             initialValues={initialValues}
-            onSubmit={(values) => onSubmit(values, navigate)}
+            onSubmit={(values) => onSubmit(values, navigate, organizationDetails)}
             validationSchema={validationSchema}
           >
             {({ handleSubmit }) => (
@@ -55,22 +50,18 @@ const Register = () => {
                   <InputControl name="firstName" label="First Name" />
                   <InputControl name="lastName" label="Last Name" />
                   <InputControl name="phoneNumber" label="Phone" />
-                  <InputControl name="email" label="Email" />
                 </Flex>
                 <Flex padding="2%" flex="1" flexDir="column">
-                  <InputControl name="userName" label="User Name" />
+                  <InputControl name="email" label="Email" />
                   <InputControl name="password" label="Password" />
-                  <Select mt="2rem" placeholder="Select Organization">
-                    <option value="option1">Option 1</option>
-                  </Select>
-                  <Link href="/Register"> Or Create New Orgnaization </Link>
+                  <OrganizationForm setOrganizationDetails={setOrganizationDetails} />
                   <Button type="submit" colorScheme="blue" alignSelf="flex-end">Create User</Button>
                 </Flex>
               </Box>
             )}
           </Formik>
         </Flex>
-      </Flex>
+      </Card>
     </Flex>
   );
 };

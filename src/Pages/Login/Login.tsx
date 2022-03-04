@@ -6,30 +6,19 @@ import { Field, Formik } from 'formik';
 import { RiLockPasswordLine, RiUserLine } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import { useEffect } from 'react';
-import { Dict } from '../../Types/Utils';
+import React from 'react';
+import { Dict } from '../../Types/Utils.Types';
 import varcodeLogo from '../../Assets/varcode-logo.png';
 import { initialValues, onSubmit, validationSchema } from './Login.Logic';
+import Card from '../../Components/Card/Card';
+import { AuthStatus } from '../../hooks/useAuth/useAuth.hook';
 
-const Login = () => {
+const Login = ({ setAuthStatus } : {setAuthStatus : React.Dispatch<React.SetStateAction<AuthStatus>>}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [cookie, setCookie] = useCookies();
-  useEffect(() => {
-    if (cookie.token) navigate('/');
-  }, [cookie]);
   return (
     <Flex justifyContent="center" mt="5rem" w="100%">
-      <Flex
-        borderWidth="1px"
-        p="16px"
-        boxShadow="lg"
-        h="fit-content"
-        borderRadius="lg"
-        flexDir="column"
-        overflow="hidden"
-      >
+      <Card>
         <Image
           src={varcodeLogo}
           alt="Barcode"
@@ -40,23 +29,21 @@ const Login = () => {
           <Heading m="5" mb="0" as="h4" size="md">VarCode Flow</Heading>
           <Formik
             initialValues={initialValues}
-            onSubmit={(values) => onSubmit(values, dispatch, navigate, setCookie)}
+            onSubmit={(values) => onSubmit(values, dispatch, navigate, setAuthStatus)}
             validationSchema={validationSchema}
           >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, isSubmitting }) => (
               <Box
                 as="form"
                 onSubmit={handleSubmit as any}
                 w="90%"
               >
-                <Field name="userName">
+                <Field name="email">
                   {({ field, meta }: { meta: Dict<string>, field: Dict<any> }) => (
                     <>
-                      <FormLabel htmlFor="password">User Name</FormLabel>
+                      <FormLabel htmlFor="email">Email</FormLabel>
                       <InputGroup>
-                        <InputLeftElement
-                          pointerEvents="none"
-                        >
+                        <InputLeftElement pointerEvents="none">
                           <RiUserLine />
                         </InputLeftElement>
                         <Input
@@ -65,11 +52,11 @@ const Login = () => {
                                   // @ts-ignore
                           isInvalid={meta.touched && meta.error}
                           placeholder="User Name"
-                          id="userName"
+                          id="email"
                         />
                       </InputGroup>
                       {meta.touched && meta.error && (
-                        <Text color="red">{meta.error}</Text>
+                        <Text fontSize="xl" color="red">{meta.error}</Text>
                       )}
                     </>
                   )}
@@ -98,19 +85,19 @@ const Login = () => {
                         />
                       </InputGroup>
                       {meta.touched && meta.error && (
-                        <Text color="red">{meta.error}</Text>
+                        <Text fontSize="xl" color="red">{meta.error}</Text>
                       )}
                     </>
                   )}
                 </Field>
                 <Flex w="100%" justify="flex-end" mt="20px">
-                  <Button variant="outline" type="submit" colorScheme="blue">Login</Button>
+                  <Button variant="outline" type="submit" colorScheme="blue" isLoading={isSubmitting}>Login</Button>
                 </Flex>
               </Box>
             )}
           </Formik>
         </Flex>
-      </Flex>
+      </Card>
     </Flex>
   );
 };

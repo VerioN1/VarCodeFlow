@@ -1,27 +1,34 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Flex } from '@chakra-ui/react';
+import {
+  Route, Routes,
+} from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import App from './App';
-import AuthWrapper from './Components/Auth/AuthWrapper';
 import Login from './Pages/Login/Login';
-import Navbar from './Components/Navbar/Navbar';
+import ErrorFallback from './Pages/Error/ErrorFallback';
+import useAuth from './hooks/useAuth/useAuth.hook';
 
-const AppWrapper = () => (
-  <BrowserRouter>
-    <Navbar />
-    <Flex minH="93vh" w="100%">
+const AppWrapper = () => {
+  const { authStatus, setAuthStatus } = useAuth();
+
+  return (
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => {
+      }}
+    >
       <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route
-          path="*"
-          element={(
-            <AuthWrapper>
-              <App />
-            </AuthWrapper>
-                      )}
-        />
+        {
+            authStatus === 'loading' && <Route path="*" element={<div>Loading...</div>} />
+        }
+        {
+          authStatus === 'loggedIn' && <Route path="*" element={<App />} />
+        }
+        {
+            authStatus === 'loggedOut' && <Route path="*" element={<Login setAuthStatus={setAuthStatus} />} />
+        }
       </Routes>
-    </Flex>
-  </BrowserRouter>
-);
+    </ErrorBoundary>
+  );
+};
 
 export default AppWrapper;

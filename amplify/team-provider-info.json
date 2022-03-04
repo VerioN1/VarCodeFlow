@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-varcodeflow-dev-00951-authRole",
+      "UnauthRoleArn": "arn:aws:iam::284476070716:role/amplify-varcodeflow-dev-00951-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::284476070716:role/amplify-varcodeflow-dev-00951-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-varcodeflow-dev-00951-deployment",
+      "UnauthRoleName": "amplify-varcodeflow-dev-00951-unauthRole",
+      "StackName": "amplify-varcodeflow-dev-00951",
+      "StackId": "arn:aws:cloudformation:eu-central-1:284476070716:stack/amplify-varcodeflow-dev-00951/5bd2e470-86d0-11ec-802a-0aa71c155bac",
+      "AmplifyAppId": "d3i0ggdg4dyg59"
+    }
+  }
+}

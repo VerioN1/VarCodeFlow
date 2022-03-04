@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { IUser } from '../../Types/IUser';
-import { Dict } from '../../Types/Utils';
+import { IUser } from '../../Types/User.Types';
+import { Dict } from '../../Types/Utils.Types';
 
 type UserState = {
   firstName?: string;
@@ -9,6 +9,7 @@ type UserState = {
   email?: string;
   phoneNumber?: string;
   organization?: string;
+  tier?: 'user' | 'admin' | 'owner';
   isAuthenticated: boolean;
 }
 const initialState : UserState = {
