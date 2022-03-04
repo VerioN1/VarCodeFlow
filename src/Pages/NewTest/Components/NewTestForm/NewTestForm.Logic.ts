@@ -42,7 +42,7 @@ export const initialTestValues = {
   incubatorTemp: 0,
   drumInterval: 30,
   machineNum: '0',
-  volume: 0,
+  volume: '',
 };
 export const validationTestSchema = Yup.object({
   labelType: Yup.string().required('Set Label From Select Box'),

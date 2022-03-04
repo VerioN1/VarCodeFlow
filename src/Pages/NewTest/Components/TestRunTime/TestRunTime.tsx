@@ -15,11 +15,11 @@ import popToast from '../../../../Components/Toasts/PopToast';
 import { resetExperimentActivationDate } from '../../../../services/Experiments.services';
 
 const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
-  const [scans, setScans] = useState<IScan[]>([]);
+  const [scans, setScans] = useState<IScan[]>(experiment.scans);
   const timeoutInSeconds = experiment.drumInterval * 1000;
   const roundCounterRef = useRef(experiment?.scans?.length > 0 ? Number(experiment.scans[experiment.scans.length - 1].round) + 1 : 0);
   const [barCodeValue, setBarCodeValue] = useState('');
-  const [scansBundleForCharts, setScansBundleForCharts] = useState(experiment.scans.slice(100));
+  const [scansBundleForCharts, setScansBundleForCharts] = useState(experiment.scans);
   const refInput = useRef<HTMLInputElement>();
 
   const handleOnChange = (e: { target: { value: any; }; }) => {
@@ -56,7 +56,7 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
       }
       roundCounterRef.current += 1;
       setScans([]);
-      setScansBundleForCharts((prev) => [...prev.slice(100), ...scans]);
+      setScansBundleForCharts((prev) => [...prev, ...scans]);
       SubmitScans(experiment._id, scans);
       popToast.PopSuccessToast('Scans sent');
     }, timeoutInSeconds);

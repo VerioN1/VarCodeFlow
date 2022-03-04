@@ -11,13 +11,13 @@ interface TestDataPlotsProps {
   children?: React.ReactNode;
 }
 
-const TestDataPlots : FC<TestDataPlotsProps> = ({ testData }) =>
-// const [selectedTest, setSelectedTest] = React.useState<Array<IScan[]>>([]);
-// useEffect(() => {
-//   setSelectedTest(spliceIntoChunks(testData, 200));
-// }, []);
-
-  (
+const TestDataPlots : FC<TestDataPlotsProps> = ({ testData }) => {
+  // const [selectedTest, setSelectedTest] = React.useState<Array<IScan[]>>([]);
+  // useEffect(() => {
+  //   setSelectedTest(spliceIntoChunks(testData, 200));
+  // }, []);
+  const test = 1;
+  return (
     <Flex w="100%" flexDir="column" mt="1em">
       <Flex flexDir="column" justify="center" align="center" maxH="60vh" flex="1">
         {/* {selectedTest.length > 0 ? <TestChart scans={selectedTest[0]} /> : <Loader />} */}
@@ -28,4 +28,5 @@ const TestDataPlots : FC<TestDataPlotsProps> = ({ testData }) =>
       </Flex>
     </Flex>
   );
+};
 export default memo(TestDataPlots);

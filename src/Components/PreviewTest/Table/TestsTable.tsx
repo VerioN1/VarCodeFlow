@@ -89,7 +89,7 @@ const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
                 </Tr>
               );
             } return (
-              <Tr {...row.getRowProps()} background="blue.300">
+              <Tr {...row.getRowProps()} borderTop="2px solid #4299e1">
                 {row.cells.map((cell) => (
                   <Td {...cell.getCellProps()}>
                     {cell.render('Cell')}

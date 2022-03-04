@@ -17,7 +17,7 @@ export const onSubmit = async (
   setAuth: React.Dispatch<React.SetStateAction<AuthStatus>>,
 ) => {
   try {
-    const res = await loginUser(values.email, values.password);
+    const res = await loginUser(values.email.toLowerCase(), values.password);
     console.log(res);
     dispatch(login(res.user));
     Logger.Log('Login Success', { userName: values.email, jwt: res.jwt });
@@ -25,7 +25,8 @@ export const onSubmit = async (
     setAuth('loggedIn');
     navigate('/');
   } catch (err) {
-    if (axios.isAxiosError(err)) {
+    // @ts-ignore
+    if (axios.isAxiosError(err) && err.response.status === 401) {
       // @ts-ignore
       Logger.Error('Login Failure - Email Or Password are not correct', { error: err, email: values.email });
     } else {

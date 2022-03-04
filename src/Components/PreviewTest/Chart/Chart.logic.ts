@@ -3,16 +3,16 @@ import { IScan } from '../../../Types/Tests.Types';
 
 const prepareData = (data : IScan[]) => {
   let currentRound = '-1';
-  const dataSet = data.reduce((r, a) => {
+  const dataSet = data.reduce((aggragator, scan) => {
     // eslint-disable-next-line no-param-reassign
-    if (a.round !== currentRound.substring(' ')[0]) {
-      currentRound = `${a.round}-${a.elapsedTime ?? a.elpasedTime}`;
+    if (scan.round !== currentRound.split('-')[0]) {
+      currentRound = `${scan.round}-${scan.elapsedTime}`;
     }
-    r[currentRound] = r[currentRound] || [];
-    r[currentRound].push({ ...a, QC: a.QC });
-    return r;
+    aggragator[currentRound] = aggragator[currentRound] || [];
+    aggragator[currentRound].push(scan);
+    return aggragator;
   }, Object.create(null));
-  // const dataSet = groupBy(data);
+  // console.log(dataSet);
   return {
     labels: Object.keys(dataSet),
     datasets: [

@@ -41,7 +41,7 @@ const FinishedTests = () => {
             <Flex w={{ base: '90%', xl: '70%' }} mt="1rem">
               <PreviewTest
                 testMetaData={state.data}
-                testScans={state.data.scans.slice(-300)}
+                testScans={state.data.scans}
                 metaDataChildren={(
                   <Flex flexDir="column">
                     <Grid templateColumns="repeat(auto-fit, minmax(230px, 1fr))" gridGap="1rem" mt="1rem">

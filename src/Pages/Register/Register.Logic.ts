@@ -11,7 +11,7 @@ export const onSubmit = async (
 ) => {
   try {
     if (organizationDetails) {
-      await createNewUser({ ...values, organization: { ...organizationDetails } });
+      await createNewUser({ ...values, email: values.email.toLowerCase(), organization: { ...organizationDetails } });
       navigate('/');
     } else {
       throw new Error('Organization details was not filled correctly');
