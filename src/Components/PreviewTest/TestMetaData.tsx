@@ -53,7 +53,7 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
         {!hideMetaData && (
         <>
           <StatsCard title="Test Name" stat={experimentName} icon={<BiTestTube size="3em" />} />
-          {isTestInProgress && (<StatsCard title="Time elapsed since start" stat={timePostStart} icon={<IoIosTimer size="3em" />} />) }
+          {isTestInProgress && (<StatsCard title="Time Elapsed" stat={timePostStart} icon={<IoIosTimer size="3em" />} />) }
           <StatsCard
             title="Test Start Date"
             textSize={{ base: 'lg', '2xl': '2xl' }}

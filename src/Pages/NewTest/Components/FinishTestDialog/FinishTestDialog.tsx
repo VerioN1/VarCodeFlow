@@ -23,8 +23,8 @@ const FinishTestDialog = ({ testId }: {testId: string}) => {
       onAction={handleSubmit}
       acceptButtonText="Send Results"
     >
-      <p>Are you sure you want to finish the test?</p>
-      <p>You will not be able to finish the test again.</p>
+      <p>Are you sure you want to stop the test?</p>
+      <p>You will not be able to restart the test again.</p>
       <Textarea
         // @ts-ignore
         ref={inputRef}

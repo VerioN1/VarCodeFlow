@@ -1,4 +1,5 @@
 export type IOrganization = {
+  _id?: string;
   contactName: string;
   contactEmail: string;
   organizationName: string;
@@ -13,5 +14,5 @@ export interface IUser {
   tier: 'user' | 'admin' | 'owner';
   email: string;
   phoneNumber: string;
-  organization: IOrganization;
+  organizationID: string;
 }

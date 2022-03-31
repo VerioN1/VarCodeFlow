@@ -1,23 +1,22 @@
 import { NavigateFunction } from 'react-router-dom';
 import * as Yup from 'yup';
-import { IOrganization } from '../../Types/User.Types';
 import Logger from '../../Utils/Logger/Logger.Logic';
 import { createNewUser } from '../../services/User.services';
 
 export const onSubmit = async (
   values: any,
   navigate: NavigateFunction,
-  organizationDetails: IOrganization | undefined,
+  organizationDetails: string | undefined,
 ) => {
   try {
     if (organizationDetails) {
-      await createNewUser({ ...values, email: values.email.toLowerCase(), organization: { ...organizationDetails } });
+      await createNewUser({ ...values, email: values.email.toLowerCase(), organizationID: organizationDetails });
       navigate('/');
     } else {
-      throw new Error('Organization details was not filled correctly');
+      throw new Error('Organization was not  selected - try to refresh the page');
     }
   } catch (error) {
-    Logger.Error('did you fill the organization form ?', { error });
+    Logger.Error('Email is already taken, please try other mail', { error });
   }
 };
 const rePhoneNumber = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;

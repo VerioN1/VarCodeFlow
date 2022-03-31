@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Image } from '@chakra-ui/react';
-import varcodeLogo from '../../Assets/varcode-logo.png';
+import varcodeLogo from '../../Assets/Varcode-new-logo.png';
 
 const Home = () => (
   <Flex w="100%" minH="100%" flexDir="column" p="5%" align="center">

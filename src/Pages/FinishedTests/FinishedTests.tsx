@@ -38,7 +38,7 @@ const FinishedTests = () => {
     <FetchWrapper state={state}>
       {state.data
             && (
-            <Flex w={{ base: '90%', xl: '70%' }} mt="1rem">
+            <Flex w={{ base: '90%' }} mt="1rem">
               <PreviewTest
                 testMetaData={state.data}
                 testScans={state.data.scans}

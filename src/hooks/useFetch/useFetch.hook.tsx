@@ -3,7 +3,7 @@ import { Dict } from '@chakra-ui/utils';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 export type Status = 'idle' | 'loading' | 'succeeded' | 'failed';
-export type Response<F> = F | undefined;
+export type Response<F> = F;
 type ERROR = Error | undefined | null | string | AxiosError | AxiosResponse;
 export type StateType<F> = {
   status: Status;

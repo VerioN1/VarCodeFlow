@@ -9,11 +9,10 @@ import Card from '../../Card/Card';
 import { IScan } from '../../../Types/Tests.Types';
 
 const TestTable : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
-  const [isTheSame, setIsTheSame] = React.useState(false);
   const data = React.useMemo(
     () => {
       if (scans) {
-        return scans.map((scan) => ({ ...scan, elapsedTime: scan.elpasedTime ?? scan.elapsedTime }));
+        return [...scans].reverse();
       } return [];
     },
     [scans],

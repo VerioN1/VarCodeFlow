@@ -1,10 +1,14 @@
 import * as Yup from 'yup';
 import Logger from '../../../Utils/Logger/Logger.Logic';
 import { IOrganization } from '../../../Types/User.Types';
+import { createNewOrganization } from '../../../services/User.services';
 
-export const CreateOrganization = (values : IOrganization, setOrganizationDetails: any) => {
+export const CreateOrganization = async (values : IOrganization, setOrganizationDetails: any) => {
   try {
-    setOrganizationDetails(values);
+    const createdOrgDetails = await createNewOrganization(values);
+    if (createdOrgDetails._id) {
+      setOrganizationDetails(createdOrgDetails._id);
+    } else throw new Error('id was not found in the new organization object');
   } catch (e : any) {
     Logger.Error('Error in NewOrganization', { error: e });
   }

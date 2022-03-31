@@ -1,12 +1,13 @@
 // @ts-nocheck
 import React, { memo } from 'react';
 import {
+  Button,
   chakra,
   Flex, Table, Tbody, Td, Th, Thead, Tr,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
-import { useTable, useSortBy } from 'react-table';
+import { useTable, useSortBy, usePagination } from 'react-table';
 import { useSelector } from 'react-redux';
 import useFetch from '../../hooks/useFetch/useFetch.hook';
 import { getExperimentsForUser } from '../../services/Experiments.services';
@@ -21,25 +22,25 @@ const TestsHistory = () => {
     if (state.data)
       return state.data.map((exp:IExperiment) => ({
         expId: exp._id, name: exp.experimentName, date: exp.activationDate, isTestFinished: exp.isTestInProgress ? 'No' : 'Yes',
-      }));
+      })).reverse();
     return [];
   }, [state.data]);
   const columns = React.useMemo(
     () => [
       {
-        Header: 'Experiment Id',
+        Header: 'TEST ID',
         accessor: 'expId',
       },
       {
-        Header: 'Experiment Name',
+        Header: 'NAME',
         accessor: 'name',
       },
       {
-        Header: 'Experiment Start Date',
+        Header: 'TEST DATE',
         accessor: 'date',
       },
       {
-        Header: 'Is test Finished?',
+        Header: 'COMPLETED?',
         accessor: 'isTestFinished',
       },
     ],
@@ -47,12 +48,19 @@ const TestsHistory = () => {
   );
 
   const {
-    getTableProps, getTableBodyProps, headerGroups, rows, prepareRow,
-  } = useTable({ columns, data }, useSortBy);
+    getTableProps, getTableBodyProps,
+    canPreviousPage,
+    canNextPage,
+    pageCount,
+    nextPage,
+    previousPage, headerGroups, page, prepareRow,
+    setPageSize,
+    state: { pageSize },
+  } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 5 } }, useSortBy, usePagination);
 
   return (
     <FetchWrapper state={state}>
-      <Flex w="70%" pt="10%" h="50%" align="center" justify="center">
+      <Flex w="70%" pt="10%" h="50%" align="center" justify="center" flexDir="column">
         <Table {...getTableProps()}>
           <Thead>
             {headerGroups.map((headerGroup) => (
@@ -77,7 +85,7 @@ const TestsHistory = () => {
             ))}
           </Thead>
           <Tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {page.map((row) => {
               prepareRow(row);
               return (
                 <Tr
@@ -95,6 +103,29 @@ const TestsHistory = () => {
             })}
           </Tbody>
         </Table>
+        <Flex m={2}>
+          <Button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {'<'}
+          </Button>
+
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {[5, 10, 20, 30, 40, 50].map((newPageSize) => (
+              <option key={newPageSize} value={newPageSize}>
+                Show
+                {' '}
+                {newPageSize}
+              </option>
+            ))}
+          </select>
+          <Button onClick={() => nextPage()} disabled={!canNextPage}>
+            {'>'}
+          </Button>
+        </Flex>
       </Flex>
     </FetchWrapper>
   );

@@ -49,14 +49,14 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
   };
 
   useEffect(() => {
-    const timerForSet = setInterval(() => {
+    const timerForSet = setInterval(async () => {
       if (scans.length === 0) {
         return;
       }
       roundCounterRef.current += 1;
       setScans([]);
-      setScansBundleForCharts((prev) => [...prev, ...scans]);
-      SubmitScans(experiment._id, scans);
+      const noDuplicateScans = await SubmitScans(experiment._id, scans);
+      setScansBundleForCharts((prev) => [...prev, ...noDuplicateScans]);
       popToast.PopSuccessToast('Scans sent');
     }, timeoutInSeconds);
     return () => {

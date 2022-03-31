@@ -5,9 +5,14 @@ import popToast from '../../../../Components/Toasts/PopToast';
 
 const SubmitScans = async (testId: string, scans: IScan[]) => {
   try {
-    await submitScans(testId, scans);
+    const noDuplicateScans = scans.filter((scan, index, self) => index === self.findIndex((t) => (
+      t.barCode === scan.barCode
+    ))) ?? [];
+    await submitScans(testId, noDuplicateScans);
+    return noDuplicateScans;
   } catch (e) {
     Logger.Error("error submiting test, results weren't saved", { error: e });
+    return [];
   }
 };
 export default SubmitScans;

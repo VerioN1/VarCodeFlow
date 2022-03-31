@@ -1,18 +1,18 @@
 import React, {
-  FC, memo, useMemo,
+  FC, memo, useEffect, useMemo, useState,
 } from 'react';
 import {
-  Chart as ChartJS,
   CategoryScale,
+  Chart as ChartJS,
+  Legend,
   LinearScale,
-  PointElement,
   LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import chartLogic from './Chart.logic';
+import prepareData from './Chart.logic';
 import { IScan } from '../../../Types/Tests.Types';
 import Card from '../../Card/Card';
 
@@ -41,12 +41,27 @@ export const options = {
   },
 };
 const TestChart : FC<{ scans: IScan[] } & React.ReactNode> = ({ scans }) => {
-  const chartData = useMemo(() => chartLogic.prepareData(scans), [scans]);
+  const [isPending, setIsPending] = useState<boolean>(true);
+  const [calcChartData, setChartData] = useState<any>([]);
+  const chartData = useMemo(async () => prepareData(scans), [scans]);
+  useEffect(() => {
+    const test = async () => {
+      const t = await chartData;
+      // debugger;
+      setChartData(t);
+      setIsPending(false);
+    };
+    test();
+  }, [scans]);
 
   return (
-    <Card w="100%">
-      <Line data={chartData} options={options} height={14} width={20} />
-    </Card>
+    <>
+      { isPending ? (<p>Loading</p>) : (
+        <Card w="100%">
+          <Line data={calcChartData} options={options} height={14} width={20} />
+        </Card>
+      )}
+    </>
   );
 };
 

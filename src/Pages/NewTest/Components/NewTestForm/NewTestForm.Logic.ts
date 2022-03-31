@@ -8,7 +8,7 @@ import popToast from '../../../../Components/Toasts/PopToast';
 import { IExperiment } from '../../../../Types/Tests.Types';
 import { createCookie } from '../../../../Utils/Cookies/CookiesHandler';
 
-export const CreateNewTest = async (values : any, userData: IUser) => {
+export const CreateNewTest = async (values : any, userData: IUser, organizationName: string | undefined) => {
   try {
     const createNewTestData = {
       ...values,
@@ -21,8 +21,11 @@ export const CreateNewTest = async (values : any, userData: IUser) => {
       manufacturingDate: fd.FormatDate(values.manufacturingDate),
       experimentOwner: userData.email,
       scans: [],
-      experimentOrganization: userData.organization?.organizationName,
+      experimentOrganization: organizationName,
     };
+    if (organizationName === undefined) {
+      throw new Error('Organization name is undefined');
+    }
     const testObj : IExperiment = await createNewExperiment(createNewTestData);
     Logger.Log('Test created successfully', { newTest: testObj.experimentOwner });
     createCookie(TEST_IN_PROGRESS_COOKIE_NAME, testObj._id);
@@ -40,9 +43,9 @@ export const initialTestValues = {
   batchNum: '',
   boxNum: '',
   manufacturingDate: new Date(),
-  incubatorTemp: 0,
+  incubatorTemp: '',
   drumInterval: 30,
-  machineNum: '0',
+  machineNum: '',
   volume: '',
 };
 export const validationTestSchema = Yup.object({

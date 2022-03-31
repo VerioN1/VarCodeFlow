@@ -16,10 +16,12 @@ const FetchWrapper = ({ state, children, shouldRenderError = true } : {shouldRen
       </Flex>
     );
   }
-
+  if (state.status === 'succeeded') {
+    console.log('finished fetching');
+  }
   return (
     <>
-      {children}
+      {state.data && children}
     </>
   );
 };

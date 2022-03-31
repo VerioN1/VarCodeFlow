@@ -1,5 +1,7 @@
 import React, { FC, useRef } from 'react';
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import {
+  Box, Flex, Heading, Text,
+} from '@chakra-ui/react';
 import { Formik } from 'formik';
 import { InputControl } from 'formik-chakra-ui';
 import ModalDialog from '../../../Components/ModalDialog/ModalDialog';
@@ -19,7 +21,7 @@ const OrganizationForm : FC<props> = ({ setOrganizationDetails }) => {
   return (
     <ModalDialog
       rest={{ maxW: { base: '70vw', md: '50vw' } }}
-      title="Set New Test Parameters"
+      title="New Organization Form"
       shouldOpen={{
         isOpen: false,
         buttonText: 'Create new Organization',
@@ -38,6 +40,7 @@ const OrganizationForm : FC<props> = ({ setOrganizationDetails }) => {
     >
       <Flex w="100%" justifyContent="center" align="center" flexDir="column">
         <Heading size="lg">Create New Organization</Heading>
+        <Text>After you finish, this organization will be set to the created account automatically </Text>
         <Formik
           innerRef={formRef}
           initialValues={initialTestValues}
