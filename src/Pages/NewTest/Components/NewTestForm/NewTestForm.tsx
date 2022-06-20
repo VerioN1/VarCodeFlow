@@ -19,6 +19,7 @@ const NewTestForm = () => {
   const formRef = useRef<any>(null);
   const userData = useSelector((state: RootState) => state.userData) as unknown as IUser;
   const state = useFetch<IOrganization>('get-org-details', () => getOrganizationById(userData.organizationID));
+  // debugger;
   return (
     <ModalDialog
       rest={{ maxW: { base: '70vw', md: '50vw' } }}

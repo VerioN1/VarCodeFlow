@@ -54,6 +54,7 @@ const Register = () => {
                     <InputControl name="password" label="Password" />
                     <Text>Organization</Text>
                     <Select
+                      my="1rem"
                       name="organization"
                       placeholder="Select organization"
                       onChange={(e) => setOrganizationDetails(e.target.value)}
@@ -64,8 +65,6 @@ const Register = () => {
                         </option>
                       ))}
                     </Select>
-                    <Text> -- OR -- </Text>
-                    <OrganizationForm setOrganizationDetails={setOrganizationDetails} />
                     <Button type="submit" colorScheme="blue" alignSelf="flex-end">Create User</Button>
                   </Flex>
                 </Box>
