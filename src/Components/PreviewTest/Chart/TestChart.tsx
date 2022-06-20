@@ -21,9 +21,19 @@ const artbitryLine = {
   id: 'artbitryLine',
   beforeDraw(chart: Chart, args: { cancelable: true }, options: any) {
     const {
-      ctx, chartArea: {
-        top, right, height, width, left, bottom,
-      }, scales: { x, y },
+      ctx,
+      chartArea: {
+        top,
+        right,
+        height,
+        width,
+        left,
+        bottom,
+      },
+      scales: {
+        x,
+        y,
+      },
     } = chart;
     if (chart?.tooltip._active && chart?.tooltip._active.length) {
       ctx.save();
@@ -33,11 +43,11 @@ const artbitryLine = {
         for (let i = 1; i <= 10; i++) {
           ctx.strokeStyle = 'red';
           ctx.strokeRect(x.getPixelForValue(activePoint.index + (jumps * i)), top, 0, height);
-          ctx.fillText(`${i * 10}%`, x.getPixelForValue(activePoint.index + (jumps * i)), top * i ** 0.8);
+          ctx.fillText(`${i * 10}%`, x.getPixelForValue(activePoint.index + (jumps * i)), (top + 20) * i ** 0.5);
           ctx.restore();
           ctx.strokeStyle = 'blue';
           ctx.strokeRect(x.getPixelForValue(activePoint.index - (jumps * i)), top, 0, height);
-          ctx.fillText(`${i * 10}%`, x.getPixelForValue(activePoint.index - (jumps * i)), top * i ** 0.8);
+          ctx.fillText(`${i * 10}%`, x.getPixelForValue(activePoint.index - (jumps * i)), (top + 20) * i ** 0.5);
           ctx.restore();
         }
       }

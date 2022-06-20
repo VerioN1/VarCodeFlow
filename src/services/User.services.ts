@@ -9,7 +9,7 @@ export const createNewUser = async (user: any) => {
   return response.data;
 };
 
-export const loginUser = async (email:string, password: string) => {
+export const loginUser = async (email: string, password: string) => {
   const { data } = await customAxios.unknownUserAxios.post('/Auth/Login', {
     email,
     password,
@@ -18,7 +18,7 @@ export const loginUser = async (email:string, password: string) => {
   return data;
 };
 
-export const isTokenValid : () => Promise< IUser | boolean> = async () => {
+export const isTokenValid: () => Promise<IUser | boolean> = async () => {
   try {
     const { data } = await customAxios.loggedInAxios.get('/Auth/ValidToken');
     Logger.Log('Token is Valid ', { data });
