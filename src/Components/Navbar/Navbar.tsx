@@ -19,8 +19,9 @@ const Navbar = () => {
         <Flex justify="center" align="center" h="100%">
           {userData.tier === 'owner' && <NavButton text="Create New User" to="Register" colorMode={colorMode} />}
           <NavButton text="Tests history" to="TestsHistory" colorMode={colorMode} />
+          <NavButton text="Create Organization" to="NewOrganization" colorMode={colorMode} />
           <NavButton text="New Test" to="NewTest/fresh" colorMode={colorMode} />
-          <Button variant="ghost" onClick={toggleColorMode}>
+          <Button variant="ghost" mx="1rem" onClick={toggleColorMode}>
             {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
           </Button>
           <Button variant="ghost" onClick={() => window.location.replace('/Logout')}>

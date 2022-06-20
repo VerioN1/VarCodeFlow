@@ -8,8 +8,8 @@ import ModalDialog from '../../../Components/ModalDialog/ModalDialog';
 import { ErrorResponse } from '../../../Types/Errors.Types';
 import {
   CreateOrganization,
-  initialTestValues,
-  validationTestSchema,
+  initialOrganizationValues,
+  validationCreateOrgSchema,
 } from './OrganizationForm.logic';
 
 type props = {
@@ -43,9 +43,9 @@ const OrganizationForm : FC<props> = ({ setOrganizationDetails }) => {
         <Text>After you finish, this organization will be set to the created account automatically </Text>
         <Formik
           innerRef={formRef}
-          initialValues={initialTestValues}
-          onSubmit={(values) => CreateOrganization(values, setOrganizationDetails)}
-          validationSchema={validationTestSchema}
+          initialValues={initialOrganizationValues}
+          onSubmit={(values) => CreateOrganization(values)}
+          validationSchema={validationCreateOrgSchema}
         >
           {({ handleSubmit }) => (
             <Box

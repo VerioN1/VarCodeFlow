@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, {
   FC, memo, useEffect, useMemo, useState,
 } from 'react';
@@ -30,7 +31,7 @@ const artbitryLine = {
       const activePoint = chart.tooltip._active[0];
       if (activePoint.index > 10) {
         const jumps = Math.floor(activePoint.index / 10);
-        for (let i = 1; i <= 10; i++) {
+        for (let i = 1; i <= 4; i++) {
           ctx.strokeStyle = 'red';
           ctx.strokeRect(x.getPixelForValue(activePoint.index + (jumps * i)), top, 0, height);
           ctx.fillText(`${i * 10}%`, x.getPixelForValue(activePoint.index + (jumps * i)), top * i ** 0.8);
