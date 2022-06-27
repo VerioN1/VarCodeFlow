@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import ErrorStackParser from 'error-stack-parser';
 import { deleteCookie } from '../../Utils/Cookies/CookiesHandler';
 import { TEST_IN_PROGRESS_COOKIE_NAME } from '../../Utils/Cookies/Cookies.constants';
 import Logger from '../../Utils/Logger/Logger.Logic';
@@ -10,7 +11,8 @@ interface props {
 
 const ErrorFallback :FC<props> = ({ error, resetErrorBoundary }) => {
   useEffect(() => {
-    console.log('ErrorFallback:', error);
+    const newError = ErrorStackParser.parse(error);
+    console.log('ErrorFallback:', newError);
     Logger.Error('UI CRASHED', { error });
     deleteCookie(TEST_IN_PROGRESS_COOKIE_NAME);
   }, []);
