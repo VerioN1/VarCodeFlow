@@ -14,6 +14,7 @@ const NewTest = () => {
   const { testId } = useParams();
   const [isTestInProgress, setIsTestInProgress] = useState(false);
   const state = useFetch<IExperiment>('test-details', () => getExperiment(testId === 'fresh' ? getCookie(TEST_IN_PROGRESS_COOKIE_NAME) : testId));
+
   useEffect(() => {
     if (state.status === 'succeeded') {
       // @ts-ignore

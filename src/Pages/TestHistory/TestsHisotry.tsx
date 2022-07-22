@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { useTable, useSortBy, usePagination } from 'react-table';
 import { useSelector } from 'react-redux';
+import { isBefore, isEqual } from 'date-fns';
+import fd from '../../Utils/Time/Date.Format';
 import useFetch from '../../hooks/useFetch/useFetch.hook';
 import { getExperimentsForUser } from '../../services/Experiments.services';
 import { IExperiment } from '../../Types/Tests.Types';
@@ -38,6 +40,13 @@ const TestsHistory = () => {
       {
         Header: 'TEST DATE',
         accessor: 'date',
+        sortType: (a, b) => {
+          const first = fd.stringToDateAndTime(a);
+          const second = fd.stringToDateAndTime(b);
+          if (isEqual(first, second))
+            return 0;
+          return isBefore(a, b) ? 1 : -1;
+        },
       },
       {
         Header: 'COMPLETED?',
@@ -51,7 +60,6 @@ const TestsHistory = () => {
     getTableProps, getTableBodyProps,
     canPreviousPage,
     canNextPage,
-    pageCount,
     nextPage,
     previousPage, headerGroups, page, prepareRow,
     setPageSize,
@@ -110,12 +118,13 @@ const TestsHistory = () => {
 
           <select
             value={pageSize}
+            style={{ color: 'black' }}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
             }}
           >
             {[5, 10, 20, 30, 40, 50].map((newPageSize) => (
-              <option key={newPageSize} value={newPageSize}>
+              <option key={newPageSize} value={newPageSize} style={{ color: 'black' }}>
                 Show
                 {' '}
                 {newPageSize}

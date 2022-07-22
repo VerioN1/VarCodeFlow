@@ -4,9 +4,9 @@ import {
 import React, { ReactNode } from 'react';
 
 interface StatsCardProps {
-    title: string;
+    title: string | ReactNode;
     textSize?: string | object;
-    stat: string;
+    stat: string | ReactNode;
     icon?: ReactNode;
 }
 const StatsCard = (props: StatsCardProps) => {

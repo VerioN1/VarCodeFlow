@@ -21,6 +21,7 @@ export interface IExperiment {
     machineNum?: string;
     deactivationDate?: string;
     volume?: number;
+    notes: string;
     comments?: string;
     scans: IScan[];
     lastScanRound: number;

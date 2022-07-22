@@ -35,6 +35,30 @@ const prepareData = (data : IScan[]) => {
           borderColor: 'rgb(255, 99, 132)',
           backgroundColor: 'rgba(255, 99, 132, 0.5)',
         },
+        {
+          label: 'QC 5',
+          data: Object.values(dataSet).map((RoundSet) => RoundSet.filter((Scan) => Scan.QC === '5').length),
+          borderColor: 'rgb(109,99,255)',
+          backgroundColor: 'rgba(109,99,255, 0.5)',
+        },
+        {
+          label: 'QC 6',
+          data: Object.values(dataSet).map((RoundSet) => RoundSet.filter((Scan) => Scan.QC === '6').length),
+          borderColor: 'rgb(245,255,99)',
+          backgroundColor: 'rgba(245,255,99, 0.5)',
+        },
+        {
+          label: 'QC 7',
+          data: Object.values(dataSet).map((RoundSet) => RoundSet.filter((Scan) => Scan.QC === '7').length),
+          borderColor: 'rgba(181,71,255)',
+          backgroundColor: 'rgba(181,71,255, 0.5)',
+        },
+        {
+          label: 'QC 8',
+          data: Object.values(dataSet).map((RoundSet) => RoundSet.filter((Scan) => Scan.QC === '8').length),
+          borderColor: 'rgb(72,155,176)',
+          backgroundColor: 'rgba(72,155,176, 0.5)',
+        },
       ],
     });
   });

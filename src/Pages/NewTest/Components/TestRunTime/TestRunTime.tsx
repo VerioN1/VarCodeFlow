@@ -29,7 +29,7 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
     if (value.length > 11) {
       clearTimeout(clearInputTimeout);
       const seconds = differenceInSeconds(new Date(), new Date(experiment.activationDate));
-      const hourseElapsed = Math.floor((seconds / 60) / 60).toString().padStart(2, '0');
+      const hoursElapsed = Math.floor((seconds / 60) / 60).toString().padStart(2, '0');
       const minutesElapsed = Math.floor((seconds / 60) % 60).toString().padStart(2, '0');
       setScans((prev) => [...prev, {
         barCode: value,
@@ -38,7 +38,7 @@ const TestRunTime = ({ experiment } : {experiment: IExperiment}) => {
           value.length - 1,
         ),
         round: roundCounterRef.current.toString(),
-        elapsedTime: `${hourseElapsed}:${minutesElapsed}`,
+        elapsedTime: `${hoursElapsed}:${minutesElapsed}`,
         date: dateFormat.formatDateAndTime(new Date()),
       }]);
       setBarCodeValue('');
