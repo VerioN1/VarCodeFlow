@@ -42,19 +42,20 @@ const Dialog = ({ onAccept = undefined, body, title }: Props) => {
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+                Close
               </Button>
+              {onAccept && (
               <Button
                 colorScheme="green"
                 onClick={async () => {
-                  if (onAccept)
-                    await onAccept();
+                  await onAccept();
                   onClose();
                 }}
                 ml={3}
               >
                 Confirm
               </Button>
+              )}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
