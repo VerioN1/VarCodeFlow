@@ -64,7 +64,7 @@ const TestsHistory = () => {
     previousPage, headerGroups, page, prepareRow,
     setPageSize,
     state: { pageSize },
-  } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 5 } }, useSortBy, usePagination);
+  } = useTable({ columns, data, initialState: { pageIndex: 0, pageSize: 5, hiddenColumns: ['expId'] } }, useSortBy, usePagination);
 
   return (
     <FetchWrapper state={state}>
@@ -95,6 +95,7 @@ const TestsHistory = () => {
           <Tbody {...getTableBodyProps()}>
             {page.map((row) => {
               prepareRow(row);
+
               return (
                 <Tr
                   {...row.getRowProps()}
