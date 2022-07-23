@@ -91,7 +91,7 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
             stat={`${drumInterval?.toString()}'s`}
             icon={<MdOutlineAccessTime size="3em" />}
           />
-          <StatsCard title="notes" stat={<Dialog title="Notes" body={notes} />} />
+          <StatsCard title="notes" stat={<Dialog title="Notes" body={notes || 'no notes written here'} />} />
         </>
         )}
 
