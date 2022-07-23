@@ -7,7 +7,6 @@ import { USER_TOKEN_FIELD } from '../Cookies/Cookies.constants';
 
 export default class Logger {
   public static Log(message: string, optionalParams: Dict<string>): void {
-    // console.log(message, optionalParams);
     if (optionalParams.toast) {
       popToast.PopInfoToast(message);
     }

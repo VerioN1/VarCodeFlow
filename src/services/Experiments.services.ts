@@ -2,6 +2,10 @@ import customAxios from './axiox.config';
 import { IExperiment, IScan } from '../Types/Tests.Types';
 import fd from '../Utils/Time/Date.Format';
 
+type ArgsUpdateExp = {
+  [key: string]: string
+}
+
 export const createNewExperiment = async (experiment: IExperiment) => {
   const { data } = await customAxios.loggedInAxios.post('/Experiment', experiment);
   return data;
@@ -24,5 +28,10 @@ export const getExperimentsForUser = async (userEmail : string) => {
 };
 export const resetExperimentActivationDate = async (experimentId: string) => {
   const { data } = await customAxios.loggedInAxios.put(`/Experiment/${experimentId}/ResetTimer`, { newActivationTime: fd.formatDateAndTime(new Date()) });
+  return data;
+};
+export const updateExperimentDetails = async ({ experimentId, experimentName }: ArgsUpdateExp) => {
+  console.log(experimentName);
+  const { data } = await customAxios.loggedInAxios.put(`/Experiment/${experimentId}`, { experimentName });
   return data;
 };

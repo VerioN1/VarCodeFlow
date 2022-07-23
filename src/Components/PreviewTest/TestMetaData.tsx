@@ -1,8 +1,8 @@
 import React, {
-  FC, memo, useEffect, useState,
+  FC, memo, useEffect, useMemo, useState,
 } from 'react';
 import {
-  Flex, Grid, Heading, SimpleGrid, Text,
+  Flex, Grid, Heading, Text,
 } from '@chakra-ui/react';
 import { BiTestTube } from 'react-icons/bi';
 import { BsCalendarDate } from 'react-icons/bs';
@@ -14,9 +14,12 @@ import { IoIosTimer } from 'react-icons/io';
 import StatsCard from '../StatsCard/StatsCard';
 import Card from '../Card/Card';
 import { IExperiment } from '../../Types/Tests.Types';
+import EditableControls from '../EditableControls/EditableControls';
+import Dialog from '../Dialog/Dialog';
 
 const TestMetaData: FC<IExperiment & React.ReactNode> = ({
   activationDate,
+  notes,
   children,
   incubatorTemp,
   isTestInProgress,
@@ -26,22 +29,30 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
 }) => {
   const [timePostStart, setTimePostStart] = useState('--:--:--');
   const [hideMetaData, setHideMetaData] = useState(false);
+
   useEffect(() => {
     const timeElapsed = setInterval(() => {
       const seconds = differenceInSeconds(new Date(), new Date(activationDate));
-      const hourseElapsed = Math.floor((seconds / 60) / 60).toString().padStart(2, '0');
+      const hoursElapsed = Math.floor((seconds / 60) / 60).toString().padStart(2, '0');
       const minutesElapsed = Math.floor((seconds / 60) % 60).toString().padStart(2, '0');
       const secondsElapsed = Math.floor(seconds % 60).toString().padStart(2, '0');
-      setTimePostStart(`${hourseElapsed}:${minutesElapsed}:${secondsElapsed}`);
+      setTimePostStart(`${hoursElapsed}:${minutesElapsed}:${secondsElapsed}`);
     }, 1000);
     return () => clearInterval(timeElapsed);
   }, []);
+
+  const editableInput = (fieldName: string, fieldData: string) => useMemo(() => (
+    <Flex flexDir="column">
+      <Text>{fieldData}</Text>
+      <EditableControls fieldName={fieldName} textToEdit={fieldData} id={_id} />
+    </Flex>
+  ), []);
+
   return (
     <Card>
       <Flex w="100%" borderBottom="1px solid" mb="1em" justify="space-between">
         <Heading>
           Test ID
-          {' '}
           {_id}
         </Heading>
         <Flex justify="center" align="center">
@@ -52,7 +63,11 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
       <Grid templateColumns="repeat(auto-fit, minmax(230px, 1fr))" gridGap="1rem">
         {!hideMetaData && (
         <>
-          <StatsCard title="Test Name" stat={experimentName} icon={<BiTestTube size="3em" />} />
+          <StatsCard
+            title="Test Name"
+            stat={editableInput('experimentName', experimentName)}
+            icon={<BiTestTube size="3em" />}
+          />
           {isTestInProgress && (<StatsCard title="Time Elapsed" stat={timePostStart} icon={<IoIosTimer size="3em" />} />) }
           <StatsCard
             title="Test Start Date"
@@ -76,6 +91,7 @@ const TestMetaData: FC<IExperiment & React.ReactNode> = ({
             stat={`${drumInterval?.toString()}'s`}
             icon={<MdOutlineAccessTime size="3em" />}
           />
+          <StatsCard title="notes" stat={<Dialog title="Notes" body={notes} />} />
         </>
         )}
 

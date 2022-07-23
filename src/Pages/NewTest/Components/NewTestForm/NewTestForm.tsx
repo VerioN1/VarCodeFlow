@@ -3,7 +3,7 @@ import {
   Box, Flex, Heading,
 } from '@chakra-ui/react';
 import { Formik } from 'formik';
-import { InputControl, NumberInputControl } from 'formik-chakra-ui';
+import { InputControl, NumberInputControl, TextareaControl } from 'formik-chakra-ui';
 import { useSelector } from 'react-redux';
 import { CreateNewTest, initialTestValues, validationTestSchema } from './NewTestForm.Logic';
 import ModalDialog from '../../../../Components/ModalDialog/ModalDialog';
@@ -55,6 +55,7 @@ const NewTestForm = () => {
                   <InputControl name="labelType" label="Label Type" />
                   <InputControl name="batchNum" label="Batch Number" />
                   <InputControl name="boxNum" label="Box Number" />
+                  <TextareaControl name="notes" label="Notes" />
                   <NumberInputControl name="drumInterval" label="last BarCode Interval in seconds" />
                 </Flex>
                 <Flex padding="2%" flex="1" flexDir="column">
